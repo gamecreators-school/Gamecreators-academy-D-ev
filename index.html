@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameCreators Academy - Login</title>
+    <style>
+        :root {
+            --primary: #10B981;
+            --secondary: #F59E0B;
+            --accent: #06B6D4;
+            --dark-bg: #0F1419;
+            --card-bg: #1A2332;
+            --success: #22C55E;
+            --warning: #EF4444;
+            --text-light: #FFFFFF;
+            --text-muted: #94A3B8;
+            --gradient: linear-gradient(135deg, #10B981 0%, #F59E0B 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            padding: 1rem;
+        }
+
+        .logo h1 {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--gradient);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .login-footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+            background: var(--dark-bg);
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        /* Header Gamificado */
+        .game-header {
+            background: var(--gradient);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar-container {
+            position: relative;
+        }
+
+        .avatar-container img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            background: var(--primary);
+            padding: 10px;
+        }
+
+        .level-badge {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            background: var(--secondary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .xp-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .xp-bar {
+            width: 200px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .xp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--secondary) 100%);
+            border-radius: 4px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 35%;
+        }
+
+        .streak-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .streak-icon {
+            font-size: 2rem;
+        }
+
+        .streak-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Navegação de Módulos */
+        .modules-nav {
+            background: var(--card-bg);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .module-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .module-card:hover {
+            border-color: var(--primary);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .module-card.completed {
+            border-color: var(--success);
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .module-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .module-number {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .module-status {
+            font-size: 1.5rem;
+        }
+
+        .module-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .module-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .module-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .progress-bar {
+            width: 100px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        /* Conteúdo do Módulo */
+        .module-content {
+            display: none;
+            padding: 2rem;
+        }
+
+        .module-content.active {
+            display: block;
+        }
+
+        .lesson-header {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+
+        .lesson-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .lesson-objectives {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .objective-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.75rem;
+            border-radius: 8px;
+        }
+
+        .objective-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        /* Simulador de Código */
+        .code-simulator {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 2rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .simulator-header {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .terminal {
+            background: #1e1e1e;
+            min-height: 300px;
+        }
+
+        .terminal-header {
+            background: #2d2d2d;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .terminal-title {
+            color: var(--accent);
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+
+        .terminal-body {
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            color: var(--text-light);
+        }
+
+        .input-line {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .prompt {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        #code-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .run-btn {
+            background: var(--success);
+            border: none;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        #terminal-output {
+            min-height: 150px;
+            margin-bottom: 1rem;
+        }
+
+        .output-line {
+            margin: 0.25rem 0;
+        }
+
+        .error {
+            color: #ff6b6b;
+        }
+
+        .success {
+            color: var(--success);
+        }
+
+        .back-btn {
+            background: var(--accent);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: rgba(6, 182, 212, 0.8);
+        }
+
+        /* Notificações */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: -300px;
+            background: var(--gradient);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1000;
+            transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .notification.show {
+            right: 20px;
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .game-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .xp-bar {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div class="login-container" id="login-screen">
+        <div class="login-card">
+            <div class="logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwIDQwQzMxLjA0NTcgNDAgNDAgMzEuMDQ1NyA0MCAyMEM0MCA4Ljk1NDMgMzEuMDQ1NyAwIDIwIDBDOC45NTQzIDAgMCA4Ljk1NDMgMCAyMEMwIDMxLjA0NTcgOC45NTQzIDQwIDIwIDQwWiIgZmlsbD0idXJsKCNwYWludDBfbGluZWFyXzFfMSkiLz4KPHBhdGggZD0iTTI4IDEySDEyVjI4SDI4VjEyWiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNiAxNkg4VjI0SDE2VjE2WiIgZmlsbD0id2hpdGUiLz4KPGR2ZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl8xXzEiIHgxPSIwIiB5MT0iMCIgeDI9IjQwIiB5Mj0iNDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzEwQjk4MSIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNGNTlFMEIiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K" alt="GameCreators">
+                <h1>ACADEMY</h1>
+            </div>
+            
+            <form id="login-form">
+                <div class="input-group">
+                    <label>Registro Acadêmico (RA)</label>
+                    <input type="text" id="ra-input" placeholder="Digite seu RA" required>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <span>ENTRAR NA AVENTURA</span>
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Não tem acesso? Entre em contato com o admin</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Principal -->
+    <div class="dashboard" id="dashboard">
+        <!-- Header Gamificado -->
+        <header class="game-header">
+            <div class="user-info">
+                <div class="avatar-container">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwIDQwQzMxLjA0NTcgNDAgNDAgMzEuMDQ1NyA0MCAyMEM0MCA4Ljk1NDMgMzEuMDQ1NyAwIDIwIDBDOC45NTQzIDAgMCA4Ljk1NDMgMCAyMEMwIDMxLjA0NTcgOC45NTQzIDQwIDIwIDQwWiIgZmlsbD0idXJsKCNwYWludDBfbGluZWFyXzFfMSkiLz4KPHBhdGggZD0iTTI4IDEySDEyVjI4SDI4VjEyWiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNiAxNkg4VjI0SDE2VjE2WiIgZmlsbD0id2hpdGUiLz4KPGR2ZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl8xXzEiIHgxPSIwIiB5MT0iMCIgeDI9IjQwIiB5Mj0iNDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzEwQjk4MSIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNGNTlFMEIiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K" id="user-avatar" alt="Avatar">
+                    <div class="level-badge" id="user-level">Lv.1</div>
+                </div>
+                <div class="user-stats">
+                    <h3 id="user-name">Desenvolvedor</h3>
+                    <div class="xp-container">
+                        <div class="xp-bar">
+                            <div class="xp-fill" id="xp-progress"></div>
+                        </div>
+                        <span class="xp-text" id="xp-text">350/1000 XP</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="streak-info">
+                <div class="streak-icon">🔥</div>
+                <div class="streak-data">
+                    <span class="streak-number" id="streak-days">7</span>
+                    <span class="streak-label">dias</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navegação de Módulos -->
+        <div class="modules-nav" id="modules-overview">
+            <h2>Curso Full-Stack - GameCreators Academy</h2>
+            <div class="modules-grid" id="modules-grid">
+                <!-- Módulos serão inseridos dinamicamente -->
+            </div>
+        </div>
+
+        <!-- Conteúdo do Módulo -->
+        <div class="module-content" id="module-content">
+            <button class="back-btn" onclick="moduleSystem.goBackToModules()">← Voltar aos Módulos</button>
+            
+            <div class="lesson-header">
+                <h1 class="lesson-title" id="current-lesson-title">Selecione um módulo para começar</h1>
+                <div class="lesson-objectives" id="lesson-objectives">
+                    <!-- Objetivos serão inseridos dinamicamente -->
+                </div>
+            </div>
+
+            <!-- Simulador de Código -->
+            <div class="code-simulator" id="code-simulator" style="display: none;">
+                <div class="simulator-header">
+                    <h4>Simulador Interativo</h4>
+                    <div class="simulator-controls">
+                        <button onclick="clearTerminal()">Limpar</button>
+                        <button onclick="resetCode()">Reset</button>
+                    </div>
+                </div>
+                
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <span class="terminal-title">Python 3.9.7</span>
+                    </div>
+                    
+                    <div class="terminal-body">
+                        <div id="terminal-output"></div>
+                        <div class="input-line">
+                            <span class="prompt">>>> </span>
+                            <input type="text" id="code-input" 
+                                   placeholder="Digite seu código aqui..." 
+                                   spellcheck="false">
+                            <button onclick="runCode()" class="run-btn">▶</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados do curso (módulos e conteúdo)
+        const courseData = {
+            modules: [
+                {
+                    id: 1,
+                    title: "Fundamentos + Git",
+                    description: "Base do Python e controle de versão",
+                    project: "TechStore v1.0 - Terminal",
+                    lessons: 8,
+                    completed: 0,
+                    unlocked: true,
+                    objectives: [
+                        "Instalar Python e configurar ambiente",
+                        "Aprender lógica de programação básica",
+                        "Configurar Git e GitHub",
+                        "Criar calculadora de preços"
+                    ],
+                    color: "#10B981"
+                },
+                {
+                    id: 2,
+                    title: "Python Avançado + Estruturas",
+                    description: "Estruturas de dados e análise",
+                    project: "TechStore v2.0 - Modular",
+                    lessons: 8,
+                    completed: 0,
+                    unlocked: false,
+                    objectives: [
+                        "Dominar estruturas de dados",
+                        "Aprender Pandas e Matplotlib",
+                        "Implementar testes unitários",
+                        "Criar sistema de relatórios"
+                    ],
+                    color: "#F59E0B"
+                },
+                {
+                    id: 3,
+                    title: "Front-end Moderno + UX",
+                    description: "Interface web responsiva",
+                    project: "TechStore v3.0 - Web",
+                    lessons: 8,
+                    completed: 0,
+                    unlocked: false,
+                    objectives: [
+                        "HTML5 semântico e acessível",
+                        "CSS3 avançado com Grid/Flexbox",
+                        "JavaScript ES6+ moderno",
+                        "Design responsivo e UX"
+                    ],
+                    color: "#06B6D4"
+                },
+                {
+                    id: 4,
+                    title: "Back-end com FastAPI",
+                    description: "APIs REST profissionais",
+                    project: "TechStore v4.0 - API",
+                    lessons: 8,
+                    completed: 0,
+                    unlocked: false,
+                    objectives: [
+                        "FastAPI e Pydantic",
+                        "Autenticação JWT",
+                        "Documentação automática",
+                        "Deploy com Docker"
+                    ],
+                    color: "#8B5CF6"
+                },
+                {
+                    id: 5,
+                    title: "Banco de Dados + ORM",
+                    description: "Persistência robusta",
+                    project: "TechStore v5.0 - Database",
+                    lessons: 8,
+                    completed: 0,
+                    unlocked: false,
+                    objectives: [
+                        "PostgreSQL avançado",
+                        "SQLAlchemy ORM",
+                        "Migrations com Alembic",
+                        "Otimização de queries"
+                    ],
+                    color: "#EC4899"
+                },
+                {
+                    id: 6,
+                    title: "APIs + Microsserviços",
+                    description: "Arquitetura escalável",
+                    project: "TechStore v6.0 - Cloud",
+                    lessons: 8,
+                    completed: 0,
+                    unlocked: false,
+                    objectives: [
+                        "Design de APIs RESTful",
+                        "GraphQL básico",
+                        "Microsserviços e filas",
+                        "Deploy na nuvem"
+                    ],
+                    color: "#EF4444"
+                },
+                {
+                    id: 7,
+                    title: "React + TypeScript",
+                    description: "SPA moderna e tipada",
+                    project: "TechStore v7.0 - React",
+                    lessons: 8,
+                    completed: 0,
+                    unlocked: false,
+                    objectives: [
+                        "React com TypeScript",
+                        "Hooks e gerenciamento de estado",
+                        "React Router e forms",
+                        "Testes front-end"
+                    ],
+                    color: "#14B8A6"
+                },
+                {
+                    id: 8,
+                    title: "UX/UI + Design System",
+                    description: "Design profissional",
+                    project: "TechStore v8.0 - Design",
+                    lessons: 8,
+                    completed: 0,
+                    unlocked: false,
+                    objectives: [
+                        "UX Research e personas",
+                        "Figma e prototipagem",
+                        "Design System completo",
+                        "Testes de usabilidade"
+                    ],
+                    color: "#F97316"
+                },
+                {
+                    id: 9,
+                    title: "Segurança + Metodologias",
+                    description: "Processos profissionais",
+                    project: "TechStore v9.0 - Enterprise",
+                    lessons: 8,
+                    completed: 0,
+                    unlocked: false,
+                    objectives: [
+                        "Segurança web (OWASP)",
+                        "Testes E2E automatizados",
+                        "Metodologias ágeis",
+                        "CI/CD pipelines"
+                    ],
+                    color: "#22C55E"
+                },
+                {
+                    id: 10,
+                    title: "DevOps + Performance",
+                    description: "Deploy profissional",
+                    project: "TechStore v10.0 - Production",
+                    lessons: 8,
+                    completed: 0,
+                    unlocked: false,
+                    objectives: [
+                        "Docker e Kubernetes",
+                        "Monitoramento com Grafana",
+                        "Performance e CDN",
+                        "Sistema em produção"
+                    ],
+                    color: "#3B82F6"
+                },
+                {
+                    id: 11,
+                    title: "Soft Skills + Mercado",
+                    description: "Preparação profissional",
+                    project: "Portfolio Profissional",
+                    lessons: 8,
+                    completed: 0,
+                    unlocked: false,
+                    objectives: [
+                        "Portfolio e LinkedIn",
+                        "Algoritmos e estruturas",
+                        "Simulações de entrevista",
+                        "Networking e negociação"
+                    ],
+                    color: "#A855F7"
+                },
+                {
+                    id: 12,
+                    title: "Projeto Final + Especialização",
+                    description: "Sistema completo",
+                    project: "TechStore v11.0 - FINAL",
+                    lessons: 8,
+                    completed: 0,
+                    unlocked: false,
+                    objectives: [
+                        "Integração de todos os módulos",
+                        "Especialização escolhida",
+                        "Documentação profissional",
+                        "Deploy e lançamento"
+                    ],
+                    color: "#DC2626"
+                }
+            ],
+            user: {
+                ra: '',
+                name: '',
+                level: 1,
+                xp: 350,
+                streak: 7,
+                currentModule: 1
+            }
+        };
+
+        // Sistema de Gamificação
+        class GameSystem {
+            constructor() {
+                this.loadUserData();
+                this.updateUI();
+            }
+
+            addXP(amount, reason) {
+                courseData.user.xp += amount;
+                const newLevel = Math.floor(Math.sqrt(courseData.user.xp / 100)) + 1;
+                
+                if (newLevel > courseData.user.level) {
+                    courseData.user.level = newLevel;
+                    this.showLevelUp(newLevel);
+                }
+                
+                this.showXPNotification(amount, reason);
+                this.saveUserData();
+                this.updateUI();
+            }
+
+            showXPNotification(amount, reason) {
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.innerHTML = `
+                    <div style="font-size: 1.5rem;">✨</div>
+                    <div>
+                        <div style="font-weight: bold;">+${amount} XP</div>
+                        <div style="font-size: 0.8rem;">${reason}</div>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                setTimeout(() => notification.classList.add('show'), 100);
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 500);
+                }, 3000);
+            }
+
+            showLevelUp(level) {
+                alert(`🎉 LEVEL UP! Agora você é Level ${level}!`);
+            }
+
+            updateUI() {
+                document.getElementById('user-level').textContent = `Lv.${courseData.user.level}`;
+                document.getElementById('user-name').textContent = courseData.user.name || 'Desenvolvedor';
+                document.getElementById('streak-days').textContent = courseData.user.streak;
+                
+                const nextLevelXP = Math.pow(courseData.user.level, 2) * 100;
+                const currentLevelXP = courseData.user.level > 1 ? Math.pow(courseData.user.level - 1, 2) * 100 : 0;
+                const progress = ((courseData.user.xp - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100;
+                
+                document.getElementById('xp-progress').style.width = `${Math.min(progress, 100)}%`;
+                document.getElementById('xp-text').textContent = `${courseData.user.xp}/${nextLevelXP} XP`;
+            }
+
+            saveUserData() {
+                // Em uma implementação real, salvaria no servidor
+            }
+
+            loadUserData() {
+                // Em uma implementação real, carregaria do servidor
+            }
+        }
+
+        // Sistema de Autenticação
+        class AuthSystem {
+            constructor() {
+                this.initializeAuth();
+            }
+
+            initializeAuth() {
+                // Lista de RAs válidos - em produção viria do Google Sheets
+                this.validRAs = [
+                    { ra: '2024001', name: 'João Silva' },
+                    { ra: '2024002', name: 'Maria Santos' },
+                    { ra: '2024003', name: 'Pedro Costa' },
+                    { ra: '2024004', name: 'Ana Oliveira' },
+                    { ra: '2024005', name: 'Carlos Santos' },
+                    { ra: 'admin', name: 'Administrador' }
+                ];
+
+                document.getElementById('login-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleLogin();
+                });
+            }
+
+            handleLogin() {
+                const ra = document.getElementById('ra-input').value.trim();
+
+                if (!ra) {
+                    alert('Por favor, digite seu RA!');
+                    return;
+                }
+
+                const user = this.validRAs.find(u => u.ra === ra);
+
+                if (user) {
+                    courseData.user.ra = user.ra;
+                    courseData.user.name = user.name;
+                    
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('dashboard').classList.add('active');
+                    
+                    gameSystem.updateUI();
+                    moduleSystem.renderModules();
+                    
+                    gameSystem.showXPNotification(25, `Bem-vindo, ${user.name}!`);
+                } else {
+                    alert('RA não encontrado! Verifique se digitou corretamente ou entre em contato com o admin.');
+                }
+            }
+        }
+
+        // Sistema de Módulos
+        class ModuleSystem {
+            constructor() {
+                this.currentModule = null;
+                this.initializeModules();
+            }
+
+            initializeModules() {
+                this.renderModules();
+            }
+
+            renderModules() {
+                const grid = document.getElementById('modules-grid');
+                grid.innerHTML = '';
+
+                courseData.modules.forEach(module => {
+                    const card = document.createElement('div');
+                    card.className = `module-card ${module.completed === module.lessons ? 'completed' : ''} ${!module.unlocked ? 'locked' : ''}`;
+                    
+                    const progress = (module.completed / module.lessons) * 100;
+                    const statusIcon = module.completed === module.lessons ? '✅' : 
+                                     module.completed > 0 ? '📚' : 
+                                     module.unlocked ? '🚀' : '🔒';
+
+                    card.innerHTML = `
+                        <div class="module-header">
+                            <div class="module-number" style="background-color: ${module.color}">${module.id}</div>
+                            <div class="module-status">${statusIcon}</div>
+                        </div>
+                        <div class="module-title">${module.title}</div>
+                        <div class="module-desc">${module.description}</div>
+                        <div class="module-progress">
+                            <span>Projeto: ${module.project}</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${progress}%; background-color: ${module.color}"></div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+                            ${module.completed}/${module.lessons} aulas concluídas
+                        </div>
+                    `;
+
+                    if (module.unlocked) {
+                        card.addEventListener('click', () => this.selectModule(module));
+                    }
+
+                    grid.appendChild(card);
+                });
+            }
+
+            selectModule(module) {
+                this.currentModule = module;
+                document.getElementById('modules-overview').style.display = 'none';
+                document.getElementById('module-content').classList.add('active');
+                
+                this.renderModuleContent(module);
+                
+                if (module.id === 1) {
+                    document.getElementById('code-simulator').style.display = 'block';
+                }
+            }
+
+            renderModuleContent(module) {
+                document.getElementById('current-lesson-title').innerHTML = `
+                    ${module.title} - ${module.project}
+                `;
+
+                const objectives = document.getElementById('lesson-objectives');
+                objectives.innerHTML = '';
+
+                module.objectives.forEach(objective => {
+                    const item = document.createElement('div');
+                    item.className = 'objective-item';
+                    item.innerHTML = `
+                        <div class="objective-icon">✓</div>
+                        <span>${objective}</span>
+                    `;
+                    objectives.appendChild(item);
+                });
+            }
+
+            goBackToModules() {
+                document.getElementById('modules-overview').style.display = 'block';
+                document.getElementById('module-content').classList.remove('active');
+                document.getElementById('code-simulator').style.display = 'none';
+            }
+        }
+
+        // Simulador Python Simples
+        class PythonSimulator {
+            constructor() {
+                this.history = [];
+                this.initializeSimulator();
+            }
+
+            initializeSimulator() {
+                document.getElementById('code-input').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.runCode();
+                    }
+                });
+            }
+
+            runCode() {
+                const input = document.getElementById('code-input');
+                const code = input.value.trim();
+                
+                if (!code) return;
+
+                this.addToHistory(code);
+                this.executeCode(code);
+                input.value = '';
+            }
+
+            addToHistory(code) {
+                this.history.push(code);
+                const output = document.getElementById('terminal-output');
+                
+                const commandLine = document.createElement('div');
+                commandLine.className = 'output-line';
+                commandLine.innerHTML = `<span style="color: var(--accent);">>>> </span>${code}`;
+                output.appendChild(commandLine);
+            }
+
+            executeCode(code) {
+                const output = document.getElementById('terminal-output');
+                const resultLine = document.createElement('div');
+                resultLine.className = 'output-line';
+
+                try {
+                    // Simulação simples de Python
+                    let result = this.simulatePython(code);
+                    
+                    if (result !== undefined) {
+                        resultLine.innerHTML = `<span class="success">${result}</span>`;
+                        gameSystem.addXP(10, 'Código executado com sucesso!');
+                    }
+                } catch (error) {
+                    resultLine.innerHTML = `<span class="error">Erro: ${error.message}</span>`;
+                }
+
+                output.appendChild(resultLine);
+                output.scrollTop = output.scrollHeight;
+            }
+
+            simulatePython(code) {
+                // Simulação bem básica de alguns comandos Python
+                if (code.startsWith('print(')) {
+                    const match = code.match(/print\(['"]([^'"]*)['"]\)/);
+                    if (match) {
+                        return match[1];
+                    }
+                    
+                    const mathMatch = code.match(/print\(([^)]+)\)/);
+                    if (mathMatch) {
+                        try {
+                            const expr = mathMatch[1];
+                            if (/^[\d+\-*/(). ]+$/.test(expr)) {
+                                return eval(expr);
+                            }
+                        } catch (e) {
+                            throw new Error('Expressão inválida');
+                        }
+                    }
+                }
+
+                if (code.includes('=') && !code.includes('==')) {
+                    return ''; // Atribuição de variável
+                }
+
+                if (code === 'help()') {
+                    return 'Digite print("Olá Mundo") para começar!';
+                }
+
+                if (code === 'exit()' || code === 'quit()') {
+                    this.clearTerminal();
+                    return 'Terminal reiniciado';
+                }
+
+                // Expressões matemáticas simples
+                if (/^[\d+\-*/(). ]+$/.test(code)) {
+                    try {
+                        return eval(code);
+                    } catch (e) {
+                        throw new Error('Expressão matemática inválida');
+                    }
+                }
+
+                throw new Error('Comando não reconhecido. Tente print("Olá Mundo")');
+            }
+
+            clearTerminal() {
+                document.getElementById('terminal-output').innerHTML = '';
+            }
+
+            resetCode() {
+                this.clearTerminal();
+                document.getElementById('code-input').value = '';
+                this.history = [];
+            }
+        }
+
+        // Funções globais
+        function clearTerminal() {
+            pythonSimulator.clearTerminal();
+        }
+
+        function resetCode() {
+            pythonSimulator.resetCode();
+        }
+
+        function runCode() {
+            pythonSimulator.runCode();
+        }
+
+        // Inicialização
+        let gameSystem, authSystem, moduleSystem, pythonSimulator;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            gameSystem = new GameSystem();
+            authSystem = new AuthSystem();
+            moduleSystem = new ModuleSystem();
+            pythonSimulator = new PythonSimulator();
+
+            // Botão para voltar aos módulos
+            document.addEventListener('keypress', (e) => {
+                if (e.key === 'Escape' && moduleSystem.currentModule) {
+                    moduleSystem.goBackToModules();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
