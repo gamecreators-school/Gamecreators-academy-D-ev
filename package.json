@@ -1,0 +1,13 @@
+json{
+  "name": "gamecreators-academy",
+  "version": "1.0.0",
+  "description": "Plataforma gamificada de ensino full-stack",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve . -l 3000"
+  },
+  "keywords": ["educação", "programação", "gamificação"],
+  "author": "GameCreators Academy",
+  "license": "MIT"
+}
