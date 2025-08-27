@@ -2157,7 +2157,7 @@
 
                 return `
                     <div class="module-card ${!isUnlocked ? 'locked' : ''}" 
-                         onclick="${isUnlocked ? `openModule(${module.id})` : 'showLockedMessage()'}">
+                         onclick="handleModuleClick(${module.id}, ${isUnlocked})">
                         <div class="module-header">
                             <div class="module-number" style="background: ${module.color};">
                                 ${module.id}
@@ -2198,15 +2198,280 @@
             return (student.completedLessons[moduleId] || []).length;
         }
 
-        function openModule(moduleId) {
+        // Direct module click handler - more reliable
+        function handleModuleClick(moduleId, isUnlocked) {
+            console.log('Module clicked:', moduleId, 'Unlocked:', isUnlocked);
+            
+            if (!isUnlocked) {
+                showLockedMessage();
+                return;
+            }
+            
             const module = courseModules.find(m => m.id === moduleId);
-            if (!module) return;
+            if (!module) {
+                console.error('Module not found:', moduleId);
+                alert('Erro: Módulo não encontrado.');
+                return;
+            }
             
-            // Hide modules grid
-            document.getElementById('modules-nav').style.display = 'none';
+            console.log('Opening module:', module.title);
             
-            // Show module lessons interface
-            showModuleLessons(module);
+            // Hide the modules navigation
+            const modulesNav = document.getElementById('modules-nav');
+            if (modulesNav) {
+                modulesNav.style.display = 'none';
+            }
+            
+            // Create and show lessons interface directly
+            createLessonsInterface(module);
+        }
+        
+        function createLessonsInterface(module) {
+            // Remove existing lessons view if any
+            const existingView = document.getElementById('module-lessons-view');
+            if (existingView) {
+                existingView.remove();
+            }
+            
+            // Create new lessons view
+            const lessonsView = document.createElement('div');
+            lessonsView.id = 'module-lessons-view';
+            lessonsView.className = 'module-lessons-view';
+            lessonsView.style.display = 'block';
+            lessonsView.style.padding = '2rem';
+            lessonsView.style.maxWidth = '1200px';
+            lessonsView.style.margin = '0 auto';
+            
+            lessonsView.innerHTML = `
+                <div style="background: var(--card-bg); padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <button onclick="backToModulesView()" 
+                            style="background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 1.5rem;">
+                        ← Voltar aos Módulos
+                    </button>
+                    <h1 style="font-size: 2rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem;">
+                        ${module.title}
+                    </h1>
+                    <p style="margin-bottom: 1rem;">${module.description}</p>
+                    <div style="background: rgba(0, 206, 201, 0.1); border: 1px solid var(--accent); padding: 1rem; border-radius: 8px;">
+                        🎯 <strong>Projeto Final:</strong> ${module.project}
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                    ${createLessonCards(module)}
+                </div>
+
+                <div style="background: var(--card-bg); padding: 2rem; border-radius: 15px; text-align: center;">
+                    <h3>Seu Progresso neste Módulo</h3>
+                    <div style="width: 100%; height: 12px; background: rgba(255, 255, 255, 0.2); border-radius: 6px; overflow: hidden; margin: 1rem 0;">
+                        <div style="height: 100%; background: ${module.color}; border-radius: 6px; width: ${calculateModuleProgress(currentUser, module.id)}%; transition: width 0.8s ease;"></div>
+                    </div>
+                    <span>${getCompletedLessonsCount(currentUser, module.id)}/${module.lessons} aulas concluídas</span>
+                </div>
+            `;
+
+            document.getElementById('dashboard').appendChild(lessonsView);
+        }
+
+        function createLessonCards(module) {
+            const lessons = [
+                { id: 1, title: "Introdução e Objetivos", duration: "15 min" },
+                { id: 2, title: "Conceitos Fundamentais", duration: "25 min" },
+                { id: 3, title: "Configuração do Ambiente", duration: "20 min" },
+                { id: 4, title: "Primeiro Projeto Prático", duration: "35 min" },
+                { id: 5, title: "Exercícios e Prática", duration: "30 min" },
+                { id: 6, title: "Conceitos Avançados", duration: "40 min" },
+                { id: 7, title: "Projeto Integrado", duration: "45 min" },
+                { id: 8, title: "Revisão e Próximos Passos", duration: "20 min" }
+            ];
+
+            return lessons.map(lesson => {
+                const isCompleted = currentUser.completedLessons[module.id] && 
+                                 currentUser.completedLessons[module.id].includes(lesson.id);
+                
+                return `
+                    <div onclick="openLessonDirect(${module.id}, ${lesson.id})" 
+                         style="background: var(--card-bg); border: 2px solid ${isCompleted ? 'var(--success)' : 'rgba(255, 255, 255, 0.1)'}; border-radius: 12px; padding: 1.5rem; cursor: pointer; transition: all 0.3s ease;"
+                         onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-5px)'"
+                         onmouseout="this.style.borderColor='${isCompleted ? 'var(--success)' : 'rgba(255, 255, 255, 0.1)'}'; this.style.transform='translateY(0)'">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div style="background: ${isCompleted ? 'var(--success)' : 'var(--primary)'}; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                                ${isCompleted ? '✅' : lesson.id}
+                            </div>
+                            <div style="background: rgba(255, 255, 255, 0.1); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; color: var(--text-muted);">
+                                ${lesson.duration}
+                            </div>
+                        </div>
+                        <h4 style="color: var(--text-light); margin-bottom: 0.5rem;">${lesson.title}</h4>
+                        <div style="font-size: 0.9rem; color: ${isCompleted ? 'var(--success)' : 'var(--text-muted)'}; font-weight: ${isCompleted ? 'bold' : 'normal'};">
+                            ${isCompleted ? 'Concluída' : 'Disponível'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openLessonDirect(moduleId, lessonId) {
+            console.log('Opening lesson:', moduleId, lessonId);
+            
+            const module = courseModules.find(m => m.id === moduleId);
+            const lessonContent = generateBasicLessonContent(moduleId, lessonId);
+            
+            // Hide lessons view
+            const lessonsView = document.getElementById('module-lessons-view');
+            if (lessonsView) {
+                lessonsView.style.display = 'none';
+            }
+            
+            // Create lesson content view
+            let lessonView = document.getElementById('lesson-content-view');
+            if (lessonView) {
+                lessonView.remove();
+            }
+            
+            lessonView = document.createElement('div');
+            lessonView.id = 'lesson-content-view';
+            lessonView.style.display = 'block';
+            lessonView.style.padding = '2rem';
+            lessonView.style.maxWidth = '900px';
+            lessonView.style.margin = '0 auto';
+            
+            lessonView.innerHTML = `
+                <div style="background: var(--card-bg); padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <button onclick="backToModuleLessons()" 
+                            style="background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 1.5rem;">
+                        ← Voltar às Aulas
+                    </button>
+                    <h1 style="font-size: 1.8rem; color: var(--text-light); margin-bottom: 0.5rem;">${lessonContent.title}</h1>
+                    <div style="display: flex; gap: 2rem; font-size: 0.9rem; color: var(--text-muted);">
+                        <span>Módulo ${moduleId}: ${module.title}</span>
+                        <span>Aula ${lessonId} de 8</span>
+                    </div>
+                </div>
+
+                <div style="background: var(--card-bg); padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+                    ${lessonContent.content}
+                </div>
+
+                <div style="background: var(--card-bg); padding: 2rem; border-radius: 15px; text-align: center;">
+                    <button onclick="markLessonCompleteDirect(${moduleId}, ${lessonId})" 
+                            style="background: var(--success); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 1.1rem; margin-bottom: 2rem;">
+                        ✅ Marcar como Concluída
+                    </button>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        ${lessonId > 1 ? `<button onclick="openLessonDirect(${moduleId}, ${lessonId - 1})" style="background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: bold;">⬅️ Aula Anterior</button>` : ''}
+                        ${lessonId < 8 ? `<button onclick="openLessonDirect(${moduleId}, ${lessonId + 1})" style="background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: bold;">Próxima Aula ➡️</button>` : ''}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('dashboard').appendChild(lessonView);
+        }
+        
+        function generateBasicLessonContent(moduleId, lessonId) {
+            if (moduleId === 1 && lessonId === 1) {
+                return {
+                    title: "Introdução à Programação",
+                    content: `
+                        <h2 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.4rem;">🎯 Objetivos da Aula</h2>
+                        <ul style="margin-left: 2rem; margin-bottom: 2rem;">
+                            <li style="margin-bottom: 0.5rem;">Entender o que é programação</li>
+                            <li style="margin-bottom: 0.5rem;">Conhecer a linguagem Python</li>
+                            <li style="margin-bottom: 0.5rem;">Configurar o ambiente de desenvolvimento</li>
+                        </ul>
+                        
+                        <h2 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.4rem;">💡 O que é Programação?</h2>
+                        <p style="margin-bottom: 1rem; line-height: 1.7;">Programação é a arte de dar instruções para o computador. É como escrever uma receita muito detalhada que o computador vai seguir exatamente.</p>
+                        
+                        <div style="background: rgba(0, 206, 201, 0.1); border: 2px solid var(--accent); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
+                            <h4 style="color: var(--accent); margin-bottom: 1rem;">💻 Exemplo Prático:</h4>
+                            <pre style="background: #1e1e1e; color: #fff; padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: 'Courier New', monospace;">print("Olá, mundo!")
+print("Bem-vindo à GameCreators Academy!")</pre>
+                        </div>
+                        
+                        <h2 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.4rem;">🐍 Por que Python?</h2>
+                        <p style="margin-bottom: 1rem;">Python é uma linguagem:</p>
+                        <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                            <li style="margin-bottom: 0.5rem;"><strong>Fácil de aprender:</strong> Sintaxe simples e intuitiva</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Poderosa:</strong> Usada por Google, Netflix, Instagram</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>Versátil:</strong> Web, jogos, IA, ciência de dados</li>
+                        </ul>
+                    `
+                };
+            }
+            
+            return {
+                title: `Aula ${lessonId} - Módulo ${moduleId}`,
+                content: `
+                    <h2 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.4rem;">📚 Conteúdo da Aula ${lessonId}</h2>
+                    <p style="margin-bottom: 1rem; line-height: 1.7;">Esta aula contém conceitos importantes para seu desenvolvimento como programador.</p>
+                    
+                    <div style="background: rgba(245, 158, 11, 0.1); border: 2px solid var(--secondary); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
+                        <h4 style="color: var(--secondary); margin-bottom: 1rem;">🎯 Objetivos:</h4>
+                        <ul style="margin-left: 2rem;">
+                            <li style="margin-bottom: 0.5rem;">Dominar os conceitos fundamentais</li>
+                            <li style="margin-bottom: 0.5rem;">Aplicar conhecimento na prática</li>
+                            <li style="margin-bottom: 0.5rem;">Preparar-se para o próximo nível</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: rgba(0, 206, 201, 0.1); border: 2px solid var(--accent); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
+                        <h4 style="color: var(--accent); margin-bottom: 1rem;">💻 Exemplo Prático:</h4>
+                        <pre style="background: #1e1e1e; color: #fff; padding: 1rem; border-radius: 8px; font-family: 'Courier New', monospace;"># Código de exemplo para a aula ${lessonId}
+def exemplo_aula_${lessonId}():
+    print("Aprendendo programação na GameCreators Academy!")
+    return True
+
+# Execute o exemplo
+exemplo_aula_${lessonId}()</pre>
+                    </div>
+                `
+            };
+        }
+        
+        function markLessonCompleteDirect(moduleId, lessonId) {
+            if (!currentUser.completedLessons) {
+                currentUser.completedLessons = {};
+            }
+            if (!currentUser.completedLessons[moduleId]) {
+                currentUser.completedLessons[moduleId] = [];
+            }
+
+            if (!currentUser.completedLessons[moduleId].includes(lessonId)) {
+                currentUser.completedLessons[moduleId].push(lessonId);
+                
+                const completedCount = currentUser.completedLessons[moduleId].length;
+                const moduleProgress = Math.round((completedCount / 8) * 100);
+                
+                const userInDB = studentsDatabase.find(s => s.ra === currentUser.ra);
+                if (userInDB) {
+                    userInDB.completedLessons = currentUser.completedLessons;
+                    userInDB.lastActivity = new Date().toISOString().split('T')[0];
+                }
+
+                alert(`🎉 Aula ${lessonId} concluída!\n\nProgresso no módulo: ${moduleProgress}%`);
+                openLessonDirect(moduleId, lessonId);
+            } else {
+                alert('Esta aula já foi marcada como concluída!');
+            }
+        }
+        
+        function backToModulesView() {
+            const lessonsView = document.getElementById('module-lessons-view');
+            const lessonView = document.getElementById('lesson-content-view');
+            
+            if (lessonsView) lessonsView.remove();
+            if (lessonView) lessonView.remove();
+            
+            document.getElementById('modules-nav').style.display = 'block';
+        }
+
+        function backToModuleLessons() {
+            const lessonView = document.getElementById('lesson-content-view');
+            if (lessonView) lessonView.remove();
+            
+            const lessonsView = document.getElementById('module-lessons-view');
+            if (lessonsView) lessonsView.style.display = 'block';
         }
 
         function showModuleLessons(module) {
@@ -2602,8 +2867,37 @@ exemplo_aula_${lessonId}()</code></pre>
             console.log('🔐 Sistema de segurança: Ativo');
             console.log('📊 Analytics: Pronto');
             
+            // Verify all functions are loaded
+            console.log('Functions check:');
+            console.log('- openModule:', typeof openModule);
+            console.log('- showModuleLessons:', typeof showModuleLessons);
+            console.log('- generateLessonsForModule:', typeof generateLessonsForModule);
+            console.log('- openLesson:', typeof openLesson);
+            
             // Initialize UI
             updateSheetsUI();
+            
+            // Force reload module functions if needed
+            if (typeof openModule === 'undefined') {
+                console.error('openModule function not found, redefining...');
+                window.openModule = function(moduleId) {
+                    console.log('Opening module:', moduleId);
+                    const module = courseModules.find(m => m.id === moduleId);
+                    if (!module) {
+                        console.error('Module not found:', moduleId);
+                        return;
+                    }
+                    
+                    // Hide modules grid
+                    const modulesNav = document.getElementById('modules-nav');
+                    if (modulesNav) {
+                        modulesNav.style.display = 'none';
+                    }
+                    
+                    // Show module lessons interface
+                    showModuleLessons(module);
+                };
+            }
         });
     </script>
 </body>
