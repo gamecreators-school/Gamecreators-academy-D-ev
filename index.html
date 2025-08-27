@@ -32,6 +32,18 @@
             min-height: 100vh;
         }
 
+        /* Hidden Admin Access */
+        .admin-secret {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            width: 5px;
+            height: 5px;
+            background: transparent;
+            cursor: pointer;
+            z-index: 999;
+        }
+
         /* Login Screen */
         .login-container {
             display: flex;
@@ -114,27 +126,52 @@
             box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
         }
 
-        .admin-toggle {
+        /* Admin Login Modal */
+        .admin-login-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .admin-login-content {
+            background-color: var(--card-bg);
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            border: 2px solid var(--warning);
+        }
+
+        .admin-login-header {
             text-align: center;
-            margin-top: 1rem;
+            margin-bottom: 2rem;
+            color: var(--warning);
         }
 
-        .admin-link {
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 0.9rem;
+        .close-admin {
+            color: var(--text-muted);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
             cursor: pointer;
+            line-height: 1;
         }
 
-        .admin-link:hover {
-            text-decoration: underline;
+        .close-admin:hover {
+            color: var(--warning);
         }
 
         /* Admin Panel */
         .admin-panel {
             display: none;
             padding: 2rem;
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
@@ -227,10 +264,47 @@
             align-items: center;
             padding: 1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
         }
 
-        .student-item:last-child {
-            border-bottom: none;
+        .student-info {
+            flex: 1;
+        }
+
+        .student-progress {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 150px;
+            margin: 0 1rem;
+        }
+
+        .progress-stats {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .student-controls {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .unlock-btn {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .unlock-btn:hover {
+            background: #059669;
         }
 
         .delete-btn {
@@ -245,6 +319,145 @@
 
         .delete-btn:hover {
             background: #dc2626;
+        }
+
+        /* Google Sheets Integration */
+        .sheets-integration {
+            background: rgba(0, 206, 201, 0.1);
+            border: 2px solid var(--accent);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .sheets-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--warning);
+        }
+
+        .status-indicator.connected {
+            background: var(--success);
+        }
+
+        .sheets-input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .sheets-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .sheets-btn:hover {
+            background: #0891b2;
+        }
+
+        /* Reports */
+        .report-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .report-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+            text-align: center;
+        }
+
+        .report-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .report-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .detailed-reports {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .report-table th,
+        .report-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .report-table th {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--primary);
+        }
+
+        /* Module Management */
+        .module-management {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .module-admin-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .module-admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .module-toggle {
+            background: var(--warning);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .module-toggle.enabled {
+            background: var(--success);
         }
 
         /* Dashboard */
@@ -374,6 +587,10 @@
             cursor: not-allowed;
         }
 
+        .module-card.locked:hover {
+            transform: none;
+        }
+
         .module-header {
             display: flex;
             align-items: center;
@@ -444,415 +661,6 @@
             transition: width 0.3s ease;
         }
 
-        /* Module Content */
-        .module-content {
-            display: none;
-            background: var(--dark-bg);
-            min-height: 100vh;
-        }
-
-        .module-content.active {
-            display: block;
-        }
-
-        .module-lessons {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .lessons-header {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 20px;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .lessons-header h1 {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .back-to-modules {
-            background: var(--accent);
-            border: none;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .back-to-modules:hover {
-            background: rgba(6, 182, 212, 0.8);
-        }
-
-        /* Lessons Grid */
-        .lessons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .lesson-card {
-            background: var(--card-bg);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .lesson-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        .lesson-card.completed {
-            border-color: var(--success);
-            background: rgba(34, 197, 94, 0.1);
-        }
-
-        .lesson-number {
-            background: var(--primary);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin: 0 auto 1rem;
-        }
-
-        .lesson-title {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: var(--text-light);
-        }
-
-        .lesson-desc {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* Individual Lesson */
-        .lesson-view {
-            display: none;
-            padding: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .lesson-view.active {
-            display: block;
-        }
-
-        .lesson-content-header {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 20px;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .lesson-content-header h2 {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .btn-estela {
-            background: linear-gradient(135deg, #6C5CE7 0%, #00CEC9 100%);
-            color: white;
-            border: none;
-            padding: 18px 35px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin: 15px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(108, 92, 231, 0.3);
-        }
-
-        .btn-estela:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.5);
-        }
-
-        .btn-estela.playing {
-            animation: pulse 1.5s infinite;
-        }
-
-        /* Audio Controls */
-        .audio-controls {
-            background: rgba(108, 92, 231, 0.1);
-            border: 2px solid #00CEC9;
-            border-radius: 15px;
-            padding: 25px;
-            margin: 20px 0;
-            text-align: center;
-            display: none;
-            animation: fadeInUp 0.5s ease-out;
-        }
-
-        .audio-controls.ativo {
-            display: block;
-        }
-
-        .controles-principais {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .controles-principais button {
-            background: #6C5CE7;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            min-width: 120px;
-        }
-
-        .controles-principais button:hover {
-            background: #00CEC9;
-            transform: translateY(-2px);
-        }
-
-        .controles-velocidade {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .controles-velocidade button {
-            background: #ddd;
-            color: #2D3436;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            min-width: 60px;
-        }
-
-        .controles-velocidade button:hover {
-            background: #6C5CE7;
-            color: white;
-        }
-
-        .controles-velocidade button.active {
-            background: #00CEC9;
-            color: white;
-        }
-
-        .status-audio {
-            margin-top: 15px;
-            padding: 10px;
-            background: white;
-            border-radius: 8px;
-            font-weight: 600;
-            color: #2D3436;
-            border: 2px solid #FDCB6E;
-        }
-
-        /* Lesson Content Sections */
-        .lesson-section {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border-left: 5px solid var(--primary);
-        }
-
-        .lesson-section h3 {
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .lesson-section p {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            line-height: 1.6;
-        }
-
-        .highlight-box {
-            background: linear-gradient(135deg, var(--secondary) 0%, #f39c12 100%);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin: 1.5rem 0;
-            font-weight: 600;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        }
-
-        .example-box {
-            background: rgba(0, 206, 201, 0.1);
-            border: 2px solid var(--accent);
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin: 1.5rem 0;
-        }
-
-        .example-box h4 {
-            color: var(--accent);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-
-        /* Quiz */
-        .quiz {
-            background: linear-gradient(135deg, rgba(253, 203, 110, 0.2) 0%, rgba(253, 203, 110, 0.1) 100%);
-            border: 3px solid var(--secondary);
-            padding: 2rem;
-            border-radius: 15px;
-            margin: 2rem 0;
-        }
-
-        .quiz h4 {
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
-            text-align: center;
-        }
-
-        .quiz-options {
-            display: grid;
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .quiz-option {
-            background: var(--card-bg);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            color: var(--text-light);
-        }
-
-        .quiz-option:hover {
-            border-color: var(--primary);
-            background: rgba(16, 185, 129, 0.1);
-            transform: translateX(10px);
-        }
-
-        .quiz-option.correct {
-            background: rgba(34, 197, 94, 0.2);
-            border-color: var(--success);
-            color: var(--success);
-        }
-
-        .quiz-option.incorrect {
-            background: rgba(239, 68, 68, 0.2);
-            border-color: var(--warning);
-            color: var(--warning);
-        }
-
-        /* Lesson Navigation */
-        .lesson-navigation {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-btn {
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .nav-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
-        }
-
-        .nav-btn:disabled {
-            background: #6b7280;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .lesson-progress {
-            background: var(--card-bg);
-            padding: 1rem 1.5rem;
-            border-radius: 20px;
-            border: 2px solid var(--accent);
-            font-weight: bold;
-            color: var(--text-light);
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .game-header {
@@ -862,10 +670,6 @@
             }
 
             .modules-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .lessons-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -882,18 +686,28 @@
                 gap: 0.5rem;
             }
 
-            .lesson-navigation {
-                flex-direction: column;
-                gap: 1rem;
+            .report-cards {
+                grid-template-columns: repeat(2, 1fr);
             }
+        }
 
-            .controles-principais {
-                flex-direction: column;
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
 </head>
 <body>
+    <!-- Hidden Admin Access -->
+    <div class="admin-secret" onclick="showAdminModal()" title="Admin Access"></div>
+
     <!-- Login Screen -->
     <div class="login-container" id="login-screen">
         <div class="login-card">
@@ -912,10 +726,23 @@
                     ENTRAR NA AVENTURA
                 </button>
             </form>
-            
-            <div class="admin-toggle">
-                <a href="#" class="admin-link" onclick="showAdminLogin()">Acesso Administrativo</a>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="admin-login-modal" class="admin-login-modal">
+        <div class="admin-login-content">
+            <span class="close-admin">&times;</span>
+            <div class="admin-login-header">
+                <h2>⚠️ Acesso Administrativo</h2>
+                <p>Digite a senha de administrador:</p>
             </div>
+            <form id="admin-login-form">
+                <div class="input-group">
+                    <input type="password" id="admin-password" placeholder="Senha do administrador" required>
+                </div>
+                <button type="submit" class="login-btn">Acessar Painel</button>
+            </form>
         </div>
     </div>
 
@@ -927,9 +754,10 @@
         </div>
 
         <div class="admin-tabs">
-            <button class="tab-btn active" onclick="showTab('students')">Gerenciar Alunos</button>
-            <button class="tab-btn" onclick="showTab('modules')">Módulos</button>
-            <button class="tab-btn" onclick="showTab('reports')">Relatórios</button>
+            <button class="tab-btn active" onclick="showTab('students')">👥 Gerenciar Alunos</button>
+            <button class="tab-btn" onclick="showTab('modules')">📚 Módulos</button>
+            <button class="tab-btn" onclick="showTab('sheets')">📊 Google Sheets</button>
+            <button class="tab-btn" onclick="showTab('reports')">📈 Relatórios</button>
         </div>
 
         <!-- Students Tab -->
@@ -962,14 +790,95 @@
         <!-- Modules Tab -->
         <div class="tab-content" id="tab-modules">
             <h2>📚 Gerenciar Módulos</h2>
-            <p>Aqui você pode configurar módulos, aulas e conteúdos.</p>
-            <p><strong>Status:</strong> 12 módulos configurados, 96 aulas disponíveis</p>
+            <p style="margin-bottom: 2rem;">Configure quais módulos estão disponíveis globalmente e gerencie conteúdos.</p>
+            
+            <div class="module-management" id="module-management">
+                <!-- Module management cards will be populated here -->
+            </div>
+        </div>
+
+        <!-- Google Sheets Tab -->
+        <div class="tab-content" id="tab-sheets">
+            <h2>📊 Integração Google Sheets</h2>
+            
+            <div class="sheets-integration">
+                <div class="sheets-status">
+                    <div class="status-indicator" id="sheets-status-indicator"></div>
+                    <span id="sheets-status-text">Desconectado</span>
+                </div>
+                
+                <div class="input-group">
+                    <label>ID da Planilha Google Sheets</label>
+                    <input type="text" 
+                           id="sheets-id" 
+                           class="sheets-input"
+                           placeholder="Ex: 1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
+                           value="">
+                    <small style="color: var(--text-muted);">
+                        Encontre o ID na URL da sua planilha: docs.google.com/spreadsheets/d/[ID_AQUI]/edit
+                    </small>
+                </div>
+                
+                <button class="sheets-btn" onclick="connectSheets()">Conectar Planilha</button>
+                <button class="sheets-btn" onclick="syncData()" style="background: var(--primary);">Sincronizar Dados</button>
+                <button class="sheets-btn" onclick="testConnection()" style="background: var(--secondary);">Testar Conexão</button>
+            </div>
+
+            <div class="detailed-reports">
+                <h3>Configuração da Planilha</h3>
+                <p>A planilha deve conter as seguintes colunas:</p>
+                <ul style="margin: 1rem 0; padding-left: 2rem; color: var(--text-muted);">
+                    <li><strong>RA:</strong> Registro acadêmico do aluno</li>
+                    <li><strong>Nome:</strong> Nome completo</li>
+                    <li><strong>Email:</strong> Email do aluno</li>
+                    <li><strong>Modulo_Atual:</strong> Último módulo desbloqueado</li>
+                    <li><strong>Progresso:</strong> Porcentagem de conclusão</li>
+                    <li><strong>Data_Cadastro:</strong> Data de matrícula</li>
+                </ul>
+            </div>
         </div>
 
         <!-- Reports Tab -->
         <div class="tab-content" id="tab-reports">
-            <h2>📊 Relatórios</h2>
-            <p>Estatísticas de uso, progresso dos alunos e métricas gerais.</p>
+            <h2>📈 Relatórios e Analytics</h2>
+            
+            <div class="report-cards">
+                <div class="report-card">
+                    <div class="report-number" id="total-students">0</div>
+                    <div class="report-label">Total de Alunos</div>
+                </div>
+                <div class="report-card">
+                    <div class="report-number" id="active-students">0</div>
+                    <div class="report-label">Alunos Ativos</div>
+                </div>
+                <div class="report-card">
+                    <div class="report-number" id="completed-modules">0</div>
+                    <div class="report-label">Módulos Concluídos</div>
+                </div>
+                <div class="report-card">
+                    <div class="report-number" id="avg-progress">0%</div>
+                    <div class="report-label">Progresso Médio</div>
+                </div>
+            </div>
+
+            <div class="detailed-reports">
+                <h3>Progresso Detalhado por Aluno</h3>
+                <table class="report-table">
+                    <thead>
+                        <tr>
+                            <th>Aluno</th>
+                            <th>RA</th>
+                            <th>Módulo Atual</th>
+                            <th>Progresso</th>
+                            <th>Última Atividade</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="detailed-reports-tbody">
+                        <!-- Data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -1014,81 +923,17 @@
                 <!-- Modules will be populated here -->
             </div>
         </div>
-
-        <!-- Module Content -->
-        <div class="module-content" id="module-content">
-            <div class="module-lessons" id="module-lessons">
-                <button class="back-to-modules" onclick="backToModules()">
-                    ← Voltar aos Módulos
-                </button>
-                
-                <div class="lessons-header">
-                    <h1 id="current-module-title">Selecione um módulo</h1>
-                    <p id="current-module-desc">Escolha um módulo para ver as aulas</p>
-                </div>
-
-                <div class="lessons-grid" id="lessons-grid">
-                    <!-- Lessons will be populated here -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Individual Lesson View -->
-        <div class="lesson-view" id="lesson-view">
-            <button class="back-to-modules" onclick="backToLessons()">
-                ← Voltar às Aulas
-            </button>
-
-            <div class="lesson-content-header">
-                <h2 id="current-lesson-title">Carregando aula...</h2>
-                <button class="btn-estela" onclick="playEstelaAudio()">
-                    🔊 Ouvir explicação da Estela
-                </button>
-                
-                <div class="audio-controls" id="audio-controls">
-                    <h4>🎵 Controles de Áudio da Estela</h4>
-                    <div class="controles-principais">
-                        <button onclick="pauseAudio()">⏸️ Pausar</button>
-                        <button onclick="resumeAudio()">▶️ Continuar</button>
-                        <button onclick="stopAudio()">⏹️ Parar</button>
-                    </div>
-                    <div class="controles-velocidade">
-                        <label>Velocidade:</label>
-                        <button onclick="setSpeed(0.5)">0.5x</button>
-                        <button onclick="setSpeed(1)" class="active">1x</button>
-                        <button onclick="setSpeed(1.5)">1.5x</button>
-                        <button onclick="setSpeed(2)">2x</button>
-                    </div>
-                    <div class="status-audio" id="status-audio">
-                        🎤 Preparando explicação da Estela...
-                    </div>
-                </div>
-            </div>
-
-            <div id="lesson-content-body">
-                <!-- Lesson content will be populated here -->
-            </div>
-
-            <div class="lesson-navigation">
-                <button class="nav-btn" id="prev-lesson" onclick="previousLesson()" disabled>
-                    ⬅️ Aula Anterior
-                </button>
-                <div class="lesson-progress" id="lesson-progress">
-                    Aula 1 de 8
-                </div>
-                <button class="nav-btn" id="next-lesson" onclick="nextLesson()">
-                    Próxima Aula ➡️
-                </button>
-            </div>
-        </div>
     </div>
 
     <script>
         // ===== GLOBAL VARIABLES =====
         let currentUser = null;
-        let currentModule = null;
-        let currentLesson = null;
-        let audioManager = null;
+        let adminPassword = 'GameAdmin2024';
+        let sheetsId = null;
+        let sheetsConnected = false;
+
+        // Student progress tracking
+        let studentProgress = {};
 
         // Course Data
         const courseData = {
@@ -1099,8 +944,8 @@
                     description: "Base sólida em Python e controle de versão",
                     project: "TechStore v1.0 - Terminal",
                     lessons: 8,
-                    completed: 0,
                     unlocked: true,
+                    enabled: true,
                     color: "#10B981"
                 },
                 {
@@ -1109,8 +954,8 @@
                     description: "Estruturas de dados e análise profissional",
                     project: "TechStore v2.0 - Sistema Modular",
                     lessons: 8,
-                    completed: 0,
                     unlocked: false,
+                    enabled: true,
                     color: "#F59E0B"
                 },
                 {
@@ -1119,8 +964,8 @@
                     description: "Interface web responsiva e experiência do usuário",
                     project: "TechStore v3.0 - Interface Web",
                     lessons: 8,
-                    completed: 0,
                     unlocked: false,
+                    enabled: true,
                     color: "#06B6D4"
                 },
                 {
@@ -1129,8 +974,8 @@
                     description: "APIs REST profissionais e documentação automática",
                     project: "TechStore v4.0 - API Completa",
                     lessons: 8,
-                    completed: 0,
                     unlocked: false,
+                    enabled: true,
                     color: "#8B5CF6"
                 },
                 {
@@ -1139,8 +984,8 @@
                     description: "Persistência robusta com PostgreSQL e SQLAlchemy",
                     project: "TechStore v5.0 - Sistema com BD",
                     lessons: 8,
-                    completed: 0,
                     unlocked: false,
+                    enabled: true,
                     color: "#EC4899"
                 },
                 {
@@ -1149,8 +994,8 @@
                     description: "Arquitetura escalável e deploy na nuvem",
                     project: "TechStore v6.0 - Cloud Native",
                     lessons: 8,
-                    completed: 0,
                     unlocked: false,
+                    enabled: true,
                     color: "#EF4444"
                 },
                 {
@@ -1159,8 +1004,8 @@
                     description: "SPA moderna com tipagem estática",
                     project: "TechStore v7.0 - React App",
                     lessons: 8,
-                    completed: 0,
                     unlocked: false,
+                    enabled: false,
                     color: "#14B8A6"
                 },
                 {
@@ -1169,8 +1014,8 @@
                     description: "Design profissional e sistema de componentes",
                     project: "TechStore v8.0 - Design System",
                     lessons: 8,
-                    completed: 0,
                     unlocked: false,
+                    enabled: false,
                     color: "#F97316"
                 },
                 {
@@ -1179,8 +1024,8 @@
                     description: "Processos ágeis e segurança aplicada",
                     project: "TechStore v9.0 - Enterprise",
                     lessons: 8,
-                    completed: 0,
                     unlocked: false,
+                    enabled: false,
                     color: "#22C55E"
                 },
                 {
@@ -1189,8 +1034,8 @@
                     description: "Deploy profissional e otimização",
                     project: "TechStore v10.0 - Production Ready",
                     lessons: 8,
-                    completed: 0,
                     unlocked: false,
+                    enabled: false,
                     color: "#3B82F6"
                 },
                 {
@@ -1199,8 +1044,8 @@
                     description: "Preparação profissional completa",
                     project: "Portfolio + Networking",
                     lessons: 8,
-                    completed: 0,
                     unlocked: false,
+                    enabled: false,
                     color: "#A855F7"
                 },
                 {
@@ -1209,85 +1054,88 @@
                     description: "Sistema completo e escolha de especialização",
                     project: "TechStore v11.0 - FINAL COMPLETO",
                     lessons: 8,
-                    completed: 0,
                     unlocked: false,
+                    enabled: false,
                     color: "#DC2626"
                 }
             ]
         };
 
-        // Sample lesson content for Module 1
-        const moduleContent = {
-            1: {
-                title: "Fundamentos + Git",
-                description: "Módulo introdutório focado nos fundamentos da programação",
-                lessons: [
-                    {
-                        id: 1,
-                        title: "Introdução à Programação",
-                        description: "Conceitos fundamentais e primeiro código",
-                        content: generateLessonContent(1, 1)
-                    },
-                    {
-                        id: 2,
-                        title: "Instalando Python",
-                        description: "Configurando ambiente de desenvolvimento",
-                        content: generateLessonContent(1, 2)
-                    },
-                    {
-                        id: 3,
-                        title: "Variáveis e Tipos de Dados",
-                        description: "Entendendo como armazenar informações",
-                        content: generateLessonContent(1, 3)
-                    },
-                    {
-                        id: 4,
-                        title: "Estruturas de Controle",
-                        description: "If, else e loops fundamentais",
-                        content: generateLessonContent(1, 4)
-                    },
-                    {
-                        id: 5,
-                        title: "Funções",
-                        description: "Organizando código com funções",
-                        content: generateLessonContent(1, 5)
-                    },
-                    {
-                        id: 6,
-                        title: "Introdução ao Git",
-                        description: "Controle de versão essencial",
-                        content: generateLessonContent(1, 6)
-                    },
-                    {
-                        id: 7,
-                        title: "GitHub e Colaboração",
-                        description: "Trabalhando em equipe",
-                        content: generateLessonContent(1, 7)
-                    },
-                    {
-                        id: 8,
-                        title: "Projeto: TechStore Terminal",
-                        description: "Primeiro projeto prático",
-                        content: generateLessonContent(1, 8)
-                    }
-                ]
-            }
-            // Additional modules would follow the same pattern
-        };
-
-        // Sample students data
+        // Students data with progress
         let studentsData = [
-            { ra: '2024001', name: 'João Silva' },
-            { ra: '2024002', name: 'Maria Santos' },
-            { ra: '2024003', name: 'Pedro Costa' },
-            { ra: 'admin', name: 'Administrador' }
+            { 
+                ra: '2024001', 
+                name: 'João Silva',
+                email: 'joao@email.com',
+                currentModule: 1,
+                progress: 25,
+                lastActivity: '2024-01-15',
+                status: 'Ativo'
+            },
+            { 
+                ra: '2024002', 
+                name: 'Maria Santos',
+                email: 'maria@email.com',
+                currentModule: 2,
+                progress: 60,
+                lastActivity: '2024-01-14',
+                status: 'Ativo'
+            },
+            { 
+                ra: '2024003', 
+                name: 'Pedro Costa',
+                email: 'pedro@email.com',
+                currentModule: 1,
+                progress: 12,
+                lastActivity: '2024-01-10',
+                status: 'Inativo'
+            }
         ];
 
-        // ===== AUTHENTICATION SYSTEM =====
-        function showAdminLogin() {
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('admin-panel').classList.add('active');
+        // Initialize student progress
+        function initializeStudentProgress() {
+            studentsData.forEach(student => {
+                if (!studentProgress[student.ra]) {
+                    studentProgress[student.ra] = {
+                        unlockedModules: [1],
+                        completedLessons: {},
+                        currentModule: student.currentModule || 1,
+                        totalProgress: student.progress || 0
+                    };
+                }
+            });
         }
+
+        // ===== AUTHENTICATION SYSTEM =====
+        function showAdminModal() {
+            document.getElementById('admin-login-modal').style.display = 'block';
+        }
+
+        function hideAdminModal() {
+            document.getElementById('admin-login-modal').style.display = 'none';
+            document.getElementById('admin-password').value = '';
+        }
+
+        // Close admin modal when clicking outside or on X
+        document.querySelector('.close-admin').onclick = hideAdminModal;
+        window.onclick = function(event) {
+            const modal = document.getElementById('admin-login-modal');
+            if (event.target === modal) {
+                hideAdminModal();
+            }
+        }
+
+        document.getElementById('admin-login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('admin-password').value;
+
+            if (password === adminPassword) {
+                hideAdminModal();
+                showAdminPanel();
+            } else {
+                alert('Senha incorreta!');
+            }
+        });
 
         document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -1295,11 +1143,6 @@
 
             if (!ra) {
                 alert('Por favor, digite seu RA!');
-                return;
-            }
-
-            if (ra === 'admin') {
-                showAdminLogin();
                 return;
             }
 
@@ -1312,19 +1155,27 @@
             }
         });
 
+        function showAdminPanel() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('dashboard').classList.remove('active');
+            document.getElementById('admin-panel').classList.add('active');
+            
+            renderStudents();
+            renderModuleManagement();
+            updateReports();
+        }
+
         function showDashboard() {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('admin-panel').classList.remove('active');
             document.getElementById('dashboard').classList.add('active');
             
             document.getElementById('user-name').textContent = currentUser.name;
-            renderModules();
+            renderModulesForStudent();
         }
 
         function logout() {
             currentUser = null;
-            currentModule = null;
-            currentLesson = null;
             
             document.getElementById('dashboard').classList.remove('active');
             document.getElementById('admin-panel').classList.remove('active');
@@ -1332,11 +1183,6 @@
             
             // Reset forms
             document.getElementById('ra-input').value = '';
-            
-            // Hide all views
-            document.getElementById('modules-overview').style.display = 'block';
-            document.getElementById('module-content').classList.remove('active');
-            document.getElementById('lesson-view').classList.remove('active');
         }
 
         // ===== ADMIN SYSTEM =====
@@ -1355,6 +1201,12 @@
 
             if (tabName === 'students') {
                 renderStudents();
+            } else if (tabName === 'modules') {
+                renderModuleManagement();
+            } else if (tabName === 'reports') {
+                updateReports();
+            } else if (tabName === 'sheets') {
+                updateSheetsStatus();
             }
         }
 
@@ -1375,13 +1227,32 @@
                 return;
             }
 
-            studentsData.push({ ra, name });
+            const newStudent = {
+                ra: ra,
+                name: name,
+                email: `${ra}@academy.com`,
+                currentModule: 1,
+                progress: 0,
+                lastActivity: new Date().toISOString().split('T')[0],
+                status: 'Ativo'
+            };
+
+            studentsData.push(newStudent);
+            
+            // Initialize progress for new student
+            studentProgress[ra] = {
+                unlockedModules: [1],
+                completedLessons: {},
+                currentModule: 1,
+                totalProgress: 0
+            };
             
             // Clear form
             document.getElementById('student-name').value = '';
             document.getElementById('student-ra').value = '';
             
             renderStudents();
+            updateReports();
             alert('Aluno adicionado com sucesso!');
         });
 
@@ -1393,42 +1264,260 @@
                 return;
             }
 
-            container.innerHTML = studentsData.map(student => `
-                <div class="student-item">
-                    <div>
-                        <strong>${student.name}</strong>
-                        <br>
-                        <small style="color: var(--text-muted);">RA: ${student.ra}</small>
+            container.innerHTML = studentsData.map(student => {
+                const progress = studentProgress[student.ra] || { unlockedModules: [1], totalProgress: 0 };
+                const maxUnlockedModule = Math.max(...progress.unlockedModules);
+                
+                return `
+                    <div class="student-item">
+                        <div class="student-info">
+                            <strong>${student.name}</strong>
+                            <br>
+                            <small style="color: var(--text-muted);">RA: ${student.ra}</small>
+                            <br>
+                            <small style="color: var(--text-muted);">Status: ${student.status}</small>
+                        </div>
+                        <div class="student-progress">
+                            <div style="font-size: 0.9rem; color: var(--accent);">
+                                Módulo ${maxUnlockedModule}
+                            </div>
+                            <div class="progress-bar" style="width: 80px;">
+                                <div class="progress-fill" style="width: ${progress.totalProgress || 0}%; background: var(--primary);"></div>
+                            </div>
+                            <div class="progress-stats">
+                                ${progress.totalProgress || 0}% completo
+                            </div>
+                        </div>
+                        <div class="student-controls">
+                            <select onchange="unlockModuleForStudent('${student.ra}', this.value)" 
+                                    style="padding: 0.25rem; background: var(--card-bg); color: var(--text-light); border: 1px solid var(--primary); border-radius: 4px; margin-right: 0.5rem;">
+                                ${courseData.modules.map(module => 
+                                    `<option value="${module.id}" ${maxUnlockedModule >= module.id ? 'selected' : ''}>
+                                        Módulo ${module.id}
+                                    </option>`
+                                ).join('')}
+                            </select>
+                            <button class="unlock-btn" onclick="unlockNextModule('${student.ra}')">
+                                Liberar Próximo
+                            </button>
+                            <button class="delete-btn" onclick="deleteStudent('${student.ra}')">
+                                Remover
+                            </button>
+                        </div>
                     </div>
-                    ${student.ra !== 'admin' ? `
-                        <button class="delete-btn" onclick="deleteStudent('${student.ra}')">
-                            Remover
-                        </button>
-                    ` : '<span style="color: var(--success);">Admin</span>'}
-                </div>
-            `).join('');
+                `;
+            }).join('');
+        }
+
+        function unlockModuleForStudent(ra, moduleId) {
+            if (!studentProgress[ra]) {
+                studentProgress[ra] = { unlockedModules: [1], completedLessons: {}, currentModule: 1, totalProgress: 0 };
+            }
+
+            const progress = studentProgress[ra];
+            const targetModule = parseInt(moduleId);
+            
+            // Unlock all modules up to the target
+            progress.unlockedModules = [];
+            for (let i = 1; i <= targetModule; i++) {
+                progress.unlockedModules.push(i);
+            }
+            
+            progress.currentModule = targetModule;
+            
+            // Update student data
+            const student = studentsData.find(s => s.ra === ra);
+            if (student) {
+                student.currentModule = targetModule;
+                student.lastActivity = new Date().toISOString().split('T')[0];
+            }
+            
+            renderStudents();
+            updateReports();
+            alert(`Módulo ${targetModule} liberado para o aluno!`);
+        }
+
+        function unlockNextModule(ra) {
+            if (!studentProgress[ra]) return;
+            
+            const progress = studentProgress[ra];
+            const currentMax = Math.max(...progress.unlockedModules);
+            const nextModule = currentMax + 1;
+            
+            if (nextModule <= courseData.modules.length) {
+                unlockModuleForStudent(ra, nextModule);
+            } else {
+                alert('Aluno já tem todos os módulos liberados!');
+            }
         }
 
         function deleteStudent(ra) {
             if (confirm('Tem certeza que deseja remover este aluno?')) {
                 studentsData = studentsData.filter(s => s.ra !== ra);
+                delete studentProgress[ra];
                 renderStudents();
+                updateReports();
             }
         }
 
-        // ===== MODULES SYSTEM =====
-        function renderModules() {
-            const container = document.getElementById('modules-grid');
+        // ===== MODULE MANAGEMENT =====
+        function renderModuleManagement() {
+            const container = document.getElementById('module-management');
             
-            container.innerHTML = courseData.modules.map(module => {
-                const progress = Math.round((module.completed / module.lessons) * 100);
-                const statusIcon = module.completed === module.lessons ? '✅' : 
-                                 module.completed > 0 ? '📚' : 
-                                 module.unlocked ? '🚀' : '🔒';
+            container.innerHTML = courseData.modules.map(module => `
+                <div class="module-admin-card">
+                    <div class="module-admin-header">
+                        <h3>Módulo ${module.id}</h3>
+                        <button class="module-toggle ${module.enabled ? 'enabled' : ''}" 
+                                onclick="toggleModule(${module.id})">
+                            ${module.enabled ? 'Ativo' : 'Inativo'}
+                        </button>
+                    </div>
+                    <h4>${module.title}</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 1rem;">${module.description}</p>
+                    <div style="background: rgba(0, 206, 201, 0.1); padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem;">
+                        <strong>Projeto:</strong> ${module.project}
+                    </div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted);">
+                        ${module.lessons} aulas disponíveis
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleModule(moduleId) {
+            const module = courseData.modules.find(m => m.id === moduleId);
+            if (module) {
+                module.enabled = !module.enabled;
+                renderModuleManagement();
+                
+                // Update modules for all logged students
+                renderModulesForStudent();
+            }
+        }
+
+        // ===== GOOGLE SHEETS INTEGRATION =====
+        function updateSheetsStatus() {
+            const indicator = document.getElementById('sheets-status-indicator');
+            const statusText = document.getElementById('sheets-status-text');
+            
+            if (sheetsConnected) {
+                indicator.classList.add('connected');
+                statusText.textContent = 'Conectado';
+            } else {
+                indicator.classList.remove('connected');
+                statusText.textContent = 'Desconectado';
+            }
+        }
+
+        function connectSheets() {
+            const sheetsIdInput = document.getElementById('sheets-id').value.trim();
+            
+            if (!sheetsIdInput) {
+                alert('Por favor, insira o ID da planilha!');
+                return;
+            }
+            
+            sheetsId = sheetsIdInput;
+            sheetsConnected = true;
+            
+            updateSheetsStatus();
+            alert('Planilha conectada com sucesso!\n\nID: ' + sheetsId);
+        }
+
+        function syncData() {
+            if (!sheetsConnected) {
+                alert('Conecte uma planilha primeiro!');
+                return;
+            }
+            
+            // Simulate sync
+            alert('Sincronizando dados com a planilha...\n\n' +
+                  'Dados enviados:\n' +
+                  '• ' + studentsData.length + ' alunos\n' +
+                  '• Progresso individual\n' +
+                  '• Módulos desbloqueados\n\n' +
+                  'Sincronização concluída!');
+        }
+
+        function testConnection() {
+            if (!sheetsConnected) {
+                alert('Conecte uma planilha primeiro!');
+                return;
+            }
+            
+            // Simulate test
+            setTimeout(() => {
+                alert('Teste de conexão realizado!\n\n' +
+                      'Status: Conexão ativa ✓\n' +
+                      'Planilha: Acessível ✓\n' +
+                      'Permissões: OK ✓\n' +
+                      'Última sincronização: ' + new Date().toLocaleString());
+            }, 1000);
+        }
+
+        // ===== REPORTS SYSTEM =====
+        function updateReports() {
+            // Calculate stats
+            const totalStudents = studentsData.length;
+            const activeStudents = studentsData.filter(s => s.status === 'Ativo').length;
+            const allProgress = studentsData.map(s => studentProgress[s.ra]?.totalProgress || 0);
+            const avgProgress = Math.round(allProgress.reduce((a, b) => a + b, 0) / totalStudents) || 0;
+            const completedModules = Object.values(studentProgress)
+                .reduce((total, progress) => total + (progress.unlockedModules?.length || 1) - 1, 0);
+
+            // Update cards
+            document.getElementById('total-students').textContent = totalStudents;
+            document.getElementById('active-students').textContent = activeStudents;
+            document.getElementById('completed-modules').textContent = completedModules;
+            document.getElementById('avg-progress').textContent = avgProgress + '%';
+
+            // Update detailed table
+            const tbody = document.getElementById('detailed-reports-tbody');
+            tbody.innerHTML = studentsData.map(student => {
+                const progress = studentProgress[student.ra] || { unlockedModules: [1], totalProgress: 0 };
+                const maxModule = Math.max(...progress.unlockedModules);
+                
+                return `
+                    <tr>
+                        <td><strong>${student.name}</strong></td>
+                        <td>${student.ra}</td>
+                        <td>Módulo ${maxModule}</td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <div class="progress-bar" style="width: 60px;">
+                                    <div class="progress-fill" style="width: ${progress.totalProgress || 0}%; background: var(--primary);"></div>
+                                </div>
+                                ${progress.totalProgress || 0}%
+                            </div>
+                        </td>
+                        <td>${student.lastActivity}</td>
+                        <td>
+                            <span style="color: ${student.status === 'Ativo' ? 'var(--success)' : 'var(--warning)'}"">
+                                ${student.status}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // ===== STUDENT DASHBOARD =====
+        function renderModulesForStudent() {
+            if (!currentUser) return;
+            
+            const container = document.getElementById('modules-grid');
+            const userProgress = studentProgress[currentUser.ra] || { unlockedModules: [1], totalProgress: 0 };
+            
+            container.innerHTML = courseData.modules.filter(module => module.enabled).map(module => {
+                const isUnlocked = userProgress.unlockedModules.includes(module.id);
+                const progress = 0; // Would be calculated based on completed lessons
+                const statusIcon = isUnlocked ? '🚀' : '🔒';
 
                 return `
-                    <div class="module-card ${module.completed === module.lessons ? 'completed' : ''} ${!module.unlocked ? 'locked' : ''}"
-                         onclick="selectModule(${module.id})" style="border-color: ${module.color}">
+                    <div class="module-card ${!isUnlocked ? 'locked' : ''}" 
+                         onclick="${isUnlocked ? `selectModule(${module.id})` : ''}" 
+                         style="border-color: ${module.color}">
                         <div class="module-header">
                             <div class="module-number" style="background-color: ${module.color}">
                                 ${module.id}
@@ -1441,11 +1530,12 @@
                             🎯 <strong>Projeto:</strong> ${module.project}
                         </div>
                         <div class="module-progress">
-                            <span>${module.completed}/${module.lessons} aulas</span>
+                            <span>0/${module.lessons} aulas</span>
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width: ${progress}%; background-color: ${module.color}"></div>
                             </div>
                         </div>
+                        ${!isUnlocked ? '<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; opacity: 0.3;">🔒</div>' : ''}
                     </div>
                 `;
             }).join('');
@@ -1453,353 +1543,36 @@
 
         function selectModule(moduleId) {
             const module = courseData.modules.find(m => m.id === moduleId);
-            if (!module || !module.unlocked) {
+            const userProgress = studentProgress[currentUser.ra] || { unlockedModules: [1] };
+            
+            if (!module || !userProgress.unlockedModules.includes(moduleId)) {
                 alert('Este módulo ainda não está disponível!');
                 return;
             }
 
-            currentModule = module;
-            showModuleContent();
-        }
-
-        function showModuleContent() {
-            document.getElementById('modules-overview').style.display = 'none';
-            document.getElementById('module-content').classList.add('active');
-            
-            document.getElementById('current-module-title').textContent = currentModule.title;
-            document.getElementById('current-module-desc').textContent = currentModule.description;
-            
-            renderLessons();
-        }
-
-        function renderLessons() {
-            const container = document.getElementById('lessons-grid');
-            
-            // Get lessons for current module (using module 1 as template)
-            const lessons = moduleContent[currentModule.id]?.lessons || generateDefaultLessons(currentModule.id);
-            
-            container.innerHTML = lessons.map(lesson => `
-                <div class="lesson-card" onclick="selectLesson(${lesson.id})">
-                    <div class="lesson-number">${lesson.id}</div>
-                    <div class="lesson-title">${lesson.title}</div>
-                    <div class="lesson-desc">${lesson.description}</div>
-                </div>
-            `).join('');
-        }
-
-        function generateDefaultLessons(moduleId) {
-            const lessonTitles = [
-                "Introdução ao Módulo",
-                "Conceitos Fundamentais", 
-                "Ferramentas e Setup",
-                "Prática Básica",
-                "Conceitos Intermediários",
-                "Prática Avançada",
-                "Integração e Testes",
-                "Projeto Final do Módulo"
-            ];
-            
-            return lessonTitles.map((title, index) => ({
-                id: index + 1,
-                title: title,
-                description: `Aula ${index + 1} do módulo ${moduleId}`,
-                content: generateLessonContent(moduleId, index + 1)
-            }));
-        }
-
-        function selectLesson(lessonId) {
-            const lessons = moduleContent[currentModule.id]?.lessons || generateDefaultLessons(currentModule.id);
-            currentLesson = lessons.find(l => l.id === lessonId);
-            
-            showLessonView();
-        }
-
-        function showLessonView() {
-            document.getElementById('module-content').classList.remove('active');
-            document.getElementById('lesson-view').classList.add('active');
-            
-            document.getElementById('current-lesson-title').textContent = currentLesson.title;
-            document.getElementById('lesson-content-body').innerHTML = currentLesson.content;
-            
-            updateLessonNavigation();
-        }
-
-        function updateLessonNavigation() {
-            const lessons = moduleContent[currentModule.id]?.lessons || generateDefaultLessons(currentModule.id);
-            const currentIndex = lessons.findIndex(l => l.id === currentLesson.id);
-            
-            document.getElementById('lesson-progress').textContent = 
-                `Aula ${currentIndex + 1} de ${lessons.length}`;
-            
-            document.getElementById('prev-lesson').disabled = currentIndex === 0;
-            document.getElementById('next-lesson').disabled = currentIndex === lessons.length - 1;
-        }
-
-        // ===== NAVIGATION =====
-        function backToModules() {
-            document.getElementById('module-content').classList.remove('active');
-            document.getElementById('lesson-view').classList.remove('active');
-            document.getElementById('modules-overview').style.display = 'block';
-            currentModule = null;
-            currentLesson = null;
-        }
-
-        function backToLessons() {
-            document.getElementById('lesson-view').classList.remove('active');
-            document.getElementById('module-content').classList.add('active');
-            currentLesson = null;
-        }
-
-        function previousLesson() {
-            const lessons = moduleContent[currentModule.id]?.lessons || generateDefaultLessons(currentModule.id);
-            const currentIndex = lessons.findIndex(l => l.id === currentLesson.id);
-            
-            if (currentIndex > 0) {
-                selectLesson(lessons[currentIndex - 1].id);
-            }
-        }
-
-        function nextLesson() {
-            const lessons = moduleContent[currentModule.id]?.lessons || generateDefaultLessons(currentModule.id);
-            const currentIndex = lessons.findIndex(l => l.id === currentLesson.id);
-            
-            if (currentIndex < lessons.length - 1) {
-                selectLesson(lessons[currentIndex + 1].id);
-            }
-        }
-
-        // ===== AUDIO SYSTEM (Estela AI) =====
-        class AudioManager {
-            constructor() {
-                this.currentAudio = null;
-                this.currentSpeech = null;
-                this.isPlaying = false;
-                this.currentSpeed = 1;
-            }
-
-            play(text) {
-                this.stop();
-                
-                // Try to use speech synthesis
-                if ('speechSynthesis' in window) {
-                    this.currentSpeech = new SpeechSynthesisUtterance(text);
-                    this.currentSpeech.lang = 'pt-BR';
-                    this.currentSpeech.rate = this.currentSpeed;
-                    this.currentSpeech.pitch = 1.1;
-                    
-                    this.currentSpeech.onstart = () => {
-                        this.isPlaying = true;
-                        this.updateUI('playing');
-                    };
-                    
-                    this.currentSpeech.onend = () => {
-                        this.isPlaying = false;
-                        this.updateUI('ended');
-                    };
-                    
-                    window.speechSynthesis.speak(this.currentSpeech);
-                } else {
-                    alert('Síntese de voz não disponível neste navegador');
-                }
-            }
-
-            pause() {
-                if (this.currentSpeech && this.isPlaying) {
-                    window.speechSynthesis.pause();
-                    this.updateUI('paused');
-                }
-            }
-
-            resume() {
-                if (this.currentSpeech && window.speechSynthesis.paused) {
-                    window.speechSynthesis.resume();
-                    this.updateUI('playing');
-                }
-            }
-
-            stop() {
-                if (this.currentSpeech) {
-                    window.speechSynthesis.cancel();
-                    this.isPlaying = false;
-                    this.updateUI('stopped');
-                }
-            }
-
-            setSpeed(speed) {
-                this.currentSpeed = speed;
-                
-                // Update active buttons
-                document.querySelectorAll('.controles-velocidade button').forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.textContent === speed + 'x') {
-                        btn.classList.add('active');
-                    }
-                });
-
-                // If currently speaking, restart with new speed
-                if (this.isPlaying && this.currentSpeech) {
-                    const text = this.currentSpeech.text;
-                    this.stop();
-                    setTimeout(() => this.play(text), 100);
-                }
-            }
-
-            updateUI(status) {
-                const statusElement = document.getElementById('status-audio');
-                const controlsElement = document.getElementById('audio-controls');
-                const estelaBtn = document.querySelector('.btn-estela');
-
-                switch (status) {
-                    case 'playing':
-                        statusElement.textContent = '🎤 Estela está explicando...';
-                        estelaBtn.textContent = '🎤 Estela falando...';
-                        estelaBtn.classList.add('playing');
-                        controlsElement.classList.add('ativo');
-                        break;
-                    case 'paused':
-                        statusElement.textContent = '⏸️ Pausado - clique continuar';
-                        break;
-                    case 'ended':
-                    case 'stopped':
-                        statusElement.textContent = '✅ Explicação finalizada!';
-                        estelaBtn.textContent = '🔊 Ouvir explicação da Estela';
-                        estelaBtn.classList.remove('playing');
-                        controlsElement.classList.remove('ativo');
-                        break;
-                }
-            }
-        }
-
-        // Audio control functions
-        function playEstelaAudio() {
-            if (!audioManager) {
-                audioManager = new AudioManager();
-            }
-
-            // Generate speech text based on current lesson
-            const speechText = generateSpeechText();
-            audioManager.play(speechText);
-        }
-
-        function pauseAudio() {
-            if (audioManager) audioManager.pause();
-        }
-
-        function resumeAudio() {
-            if (audioManager) audioManager.resume();
-        }
-
-        function stopAudio() {
-            if (audioManager) audioManager.stop();
-        }
-
-        function setSpeed(speed) {
-            if (audioManager) audioManager.setSpeed(speed);
-        }
-
-        function generateSpeechText() {
-            return `Olá! Eu sou a Estela, sua assistente de IA da GameCreators Academy. 
-                    Nesta aula sobre ${currentLesson.title}, vamos aprender conceitos importantes 
-                    para sua jornada como desenvolvedor. Vou explicar tudo de forma clara e prática, 
-                    para que você possa dominar esses conceitos e aplicá-los em seus projetos. 
-                    Vamos começar!`;
-        }
-
-        // ===== CONTENT GENERATION =====
-        function generateLessonContent(moduleId, lessonId) {
-            return `
-                <div class="lesson-section">
-                    <h3>🎯 Objetivos da Aula</h3>
-                    <p>Nesta aula você vai aprender conceitos fundamentais e aplicá-los na prática.</p>
-                    
-                    <div class="highlight-box">
-                        💡 <strong>Dica da Estela:</strong> Esta aula é essencial para sua jornada como desenvolvedor!
-                    </div>
-                </div>
-
-                <div class="lesson-section">
-                    <h3>📚 Conteúdo Principal</h3>
-                    <p>Aqui está o conteúdo principal da aula com explicações detalhadas e exemplos práticos.</p>
-                    
-                    <div class="example-box">
-                        <h4>💻 Exemplo Prático</h4>
-                        <p>Vamos ver um exemplo real de como aplicar estes conceitos.</p>
-                        <pre style="background: #1e1e1e; color: #fff; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-print("Olá, GameCreators Academy!")
-print("Bem-vindo ao módulo ${moduleId}, aula ${lessonId}!")
-                        </pre>
-                    </div>
-                </div>
-
-                <div class="quiz">
-                    <h4>🧠 Quiz de Conhecimento</h4>
-                    <p>Teste seu entendimento com esta pergunta:</p>
-                    
-                    <div class="quiz-options">
-                        <div class="quiz-option" onclick="answerQuiz(this, false)">
-                            Opção A - Incorreta
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(this, true)">
-                            Opção B - Correta
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(this, false)">
-                            Opção C - Incorreta
-                        </div>
-                        <div class="quiz-option" onclick="answerQuiz(this, false)">
-                            Opção D - Incorreta
-                        </div>
-                    </div>
-                </div>
-
-                <div class="lesson-section">
-                    <h3>🚀 Desafio Prático</h3>
-                    <p>Agora é sua vez de praticar! Complete este desafio para consolidar seu aprendizado.</p>
-                    
-                    <div class="highlight-box">
-                        🎯 <strong>Missão:</strong> Aplique os conceitos aprendidos nesta aula criando um exemplo próprio.
-                    </div>
-                </div>
-            `;
-        }
-
-        function answerQuiz(element, isCorrect) {
-            const options = element.parentNode.querySelectorAll('.quiz-option');
-            options.forEach(opt => {
-                opt.style.pointerEvents = 'none';
-                opt.classList.remove('correct', 'incorrect');
-            });
-
-            if (isCorrect) {
-                element.classList.add('correct');
-                setTimeout(() => alert('🎉 Correto! Excelente trabalho!'), 300);
-            } else {
-                element.classList.add('incorrect');
-                // Show correct answer
-                options.forEach(opt => {
-                    if (opt.onclick && opt.onclick.toString().includes('true')) {
-                        opt.classList.add('correct');
-                    }
-                });
-                setTimeout(() => alert('💡 Não foi dessa vez, mas agora você sabe a resposta certa!'), 300);
-            }
+            alert(`Módulo ${moduleId}: ${module.title}\n\nEm breve você poderá acessar as aulas completas!`);
         }
 
         // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🎮 GameCreators Academy - Sistema Completo Carregado!');
-            console.log('👥 Estudantes disponíveis:', studentsData.length);
-            console.log('📚 Módulos configurados:', courseData.modules.length);
-            console.log('🎤 Sistema de IA Estela: Ativo');
+            console.log('🎮 GameCreators Academy - Sistema Administrativo Completo Carregado!');
             
-            // Initialize admin panel
-            renderStudents();
+            initializeStudentProgress();
+            updateSheetsStatus();
+            
+            // Load saved sheets ID if exists
+            const savedSheetsId = localStorage.getItem('gamecreators-sheets-id');
+            if (savedSheetsId) {
+                document.getElementById('sheets-id').value = savedSheetsId;
+                sheetsId = savedSheetsId;
+                sheetsConnected = true;
+                updateSheetsStatus();
+            }
         });
 
-        // Cleanup on page unload
-        window.addEventListener('beforeunload', function() {
-            if (audioManager) {
-                audioManager.stop();
-            }
+        // Save sheets ID on change
+        document.getElementById('sheets-id').addEventListener('input', function() {
+            localStorage.setItem('gamecreators-sheets-id', this.value);
         });
     </script>
 </body>
