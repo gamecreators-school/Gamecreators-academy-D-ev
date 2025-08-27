@@ -1327,6 +1327,12 @@
                 return;
             }
 
+            // Check for admin access
+            if (ra === 'admin') {
+                enterAdminMode();
+                return;
+            }
+
             const student = studentsDatabase.find(s => s.ra === ra);
             if (student) {
                 currentUser = student;
