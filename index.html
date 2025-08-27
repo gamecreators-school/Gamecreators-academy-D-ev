@@ -1320,20 +1320,22 @@
         // ===== STUDENT LOGIN =====
         document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            const ra = document.getElementById('ra-input').value.trim();
+            const ra = document.getElementById('ra-input').value.trim().toLowerCase();
 
             if (!ra) {
                 alert('Por favor, digite seu RA!');
                 return;
             }
 
-            // Check for admin access
+            // Admin access - direct entry
             if (ra === 'admin') {
+                console.log('Admin access detected');
                 enterAdminMode();
                 return;
             }
 
-            const student = studentsDatabase.find(s => s.ra === ra);
+            // Student access
+            const student = studentsDatabase.find(s => s.ra === ra.toUpperCase());
             if (student) {
                 currentUser = student;
                 enterStudentMode();
