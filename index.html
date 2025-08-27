@@ -864,8 +864,341 @@
             50% { opacity: 0.5; }
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
+        /* Module Lessons View */
+        .module-lessons-view {
+            display: none;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .lessons-header {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .back-to-modules {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-modules:hover {
+            background: #0891b2;
+            transform: translateY(-2px);
+        }
+
+        .lesson-module-info h1 {
+            font-size: 2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .module-project-info {
+            background: rgba(0, 206, 201, 0.1);
+            border: 1px solid var(--accent);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .lesson-card {
+            background: var(--card-bg);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lesson-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2);
+        }
+
+        .lesson-card.completed {
+            border-color: var(--success);
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .lesson-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .lesson-number {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .lesson-card.completed .lesson-number {
+            background: var(--success);
+            font-size: 1.2rem;
+        }
+
+        .lesson-duration {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .lesson-card-content h4 {
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-status {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .lesson-card.completed .lesson-status {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .module-progress-summary {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .progress-bar-large {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill-large {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.8s ease;
+        }
+
+        /* Lesson Content View */
+        .lesson-content-view {
+            display: none;
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .lesson-header {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #0891b2;
+            transform: translateY(-2px);
+        }
+
+        .lesson-info h1 {
+            font-size: 1.8rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-meta {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .lesson-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .content-section {
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .content-section p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .content-section ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .example-box {
+            background: rgba(0, 206, 201, 0.1);
+            border: 2px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .example-box pre {
+            background: #1e1e1e;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.1));
+            border: 2px solid var(--secondary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box h4 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .step-by-step {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .step h4 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .exercise-box {
+            background: rgba(34, 197, 94, 0.1);
+            border: 2px solid var(--success);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+
+        .exercise-box h4 {
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .lesson-actions {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .complete-lesson-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .complete-lesson-btn:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+        }
+
+        .lesson-navigation {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-lesson-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-lesson-btn:hover {
+            background: #0891b2;
+            transform: translateY(-2px);
+        }
             .game-header {
                 flex-direction: column;
                 gap: 1rem;
@@ -1185,16 +1518,16 @@
         let sheetsConnectionId = null;
         let adminClickCount = 0;
 
-        // Enhanced student data structure
+        // Enhanced student data structure - Module 1 always unlocked
         let studentsDatabase = [
             {
                 ra: '2024001',
                 name: 'João Silva',
                 email: 'joao.silva@email.com',
-                unlockedModules: [1],
-                completedLessons: { 1: [1, 2] },
-                totalProgress: 25,
-                lastActivity: '2024-01-15',
+                unlockedModules: [1], // Always start with module 1
+                completedLessons: {},
+                totalProgress: 0,
+                lastActivity: new Date().toISOString().split('T')[0],
                 status: 'Ativo',
                 registrationDate: '2024-01-01'
             },
@@ -1202,10 +1535,10 @@
                 ra: '2024002',
                 name: 'Maria Santos',
                 email: 'maria.santos@email.com',
-                unlockedModules: [1, 2],
+                unlockedModules: [1, 2], // Can have more modules unlocked
                 completedLessons: { 1: [1, 2, 3, 4, 5, 6, 7, 8], 2: [1, 2, 3] },
                 totalProgress: 60,
-                lastActivity: '2024-01-14',
+                lastActivity: new Date().toISOString().split('T')[0],
                 status: 'Ativo',
                 registrationDate: '2024-01-01'
             },
@@ -1213,11 +1546,11 @@
                 ra: '2024003',
                 name: 'Pedro Costa',
                 email: 'pedro.costa@email.com',
-                unlockedModules: [1],
-                completedLessons: { 1: [1] },
-                totalProgress: 12,
-                lastActivity: '2024-01-10',
-                status: 'Inativo',
+                unlockedModules: [1], // Always start with module 1
+                completedLessons: {},
+                totalProgress: 0,
+                lastActivity: new Date().toISOString().split('T')[0],
+                status: 'Ativo',
                 registrationDate: '2024-01-01'
             }
         ];
@@ -1533,7 +1866,7 @@
             }
         }
 
-        // Add Student Form Handler
+        // Add Student Form Handler - Always unlock Module 1
         document.getElementById('add-student-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -1552,12 +1885,12 @@
                 return;
             }
 
-            // Add new student
+            // Add new student with Module 1 automatically unlocked
             const newStudent = {
                 ra: ra,
                 name: name,
                 email: email,
-                unlockedModules: [1],
+                unlockedModules: [1], // Module 1 ALWAYS unlocked immediately
                 completedLessons: {},
                 totalProgress: 0,
                 lastActivity: new Date().toISOString().split('T')[0],
@@ -1575,7 +1908,7 @@
             renderStudentsManagement();
             updateAnalytics();
             
-            alert(`Aluno ${name} cadastrado com sucesso!`);
+            alert(`✅ Aluno ${name} cadastrado com sucesso!\n\n🚀 Módulo 1 liberado automaticamente\n📚 Pode começar a estudar imediatamente`);
         });
 
         function deleteStudent(ra) {
@@ -1867,7 +2200,286 @@
 
         function openModule(moduleId) {
             const module = courseModules.find(m => m.id === moduleId);
-            alert(`🎮 ${module.title}\n\nEm breve você poderá acessar todas as aulas deste módulo!\n\nProjeto: ${module.project}\nAulas: ${module.lessons} disponíveis`);
+            if (!module) return;
+            
+            // Hide modules grid
+            document.getElementById('modules-nav').style.display = 'none';
+            
+            // Show module lessons interface
+            showModuleLessons(module);
+        }
+
+        function showModuleLessons(module) {
+            // Create lessons view if it doesn't exist
+            let lessonsView = document.getElementById('module-lessons-view');
+            if (!lessonsView) {
+                lessonsView = document.createElement('div');
+                lessonsView.id = 'module-lessons-view';
+                lessonsView.className = 'module-lessons-view';
+                document.getElementById('dashboard').appendChild(lessonsView);
+            }
+
+            lessonsView.innerHTML = `
+                <div class="lessons-header">
+                    <button class="back-to-modules" onclick="backToModulesView()">
+                        ← Voltar aos Módulos
+                    </button>
+                    <div class="lesson-module-info">
+                        <h1>${module.title}</h1>
+                        <p>${module.description}</p>
+                        <div class="module-project-info">
+                            🎯 <strong>Projeto Final:</strong> ${module.project}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lessons-grid">
+                    ${generateLessonsForModule(module)}
+                </div>
+
+                <div class="module-progress-summary">
+                    <h3>Seu Progresso neste Módulo</h3>
+                    <div class="progress-summary-content">
+                        <div class="progress-bar-large">
+                            <div class="progress-fill-large" style="width: ${calculateModuleProgress(currentUser, module.id)}%; background: ${module.color};"></div>
+                        </div>
+                        <span>${getCompletedLessonsCount(currentUser, module.id)}/${module.lessons} aulas concluídas</span>
+                    </div>
+                </div>
+            `;
+
+            lessonsView.style.display = 'block';
+        }
+
+        function generateLessonsForModule(module) {
+            const lessons = [
+                { id: 1, title: "Introdução e Objetivos", duration: "15 min" },
+                { id: 2, title: "Conceitos Fundamentais", duration: "25 min" },
+                { id: 3, title: "Configuração do Ambiente", duration: "20 min" },
+                { id: 4, title: "Primeiro Projeto Prático", duration: "35 min" },
+                { id: 5, title: "Exercícios e Prática", duration: "30 min" },
+                { id: 6, title: "Conceitos Avançados", duration: "40 min" },
+                { id: 7, title: "Projeto Integrado", duration: "45 min" },
+                { id: 8, title: "Revisão e Próximos Passos", duration: "20 min" }
+            ];
+
+            return lessons.map(lesson => {
+                const isCompleted = currentUser.completedLessons[module.id] && 
+                                 currentUser.completedLessons[module.id].includes(lesson.id);
+                
+                return `
+                    <div class="lesson-card ${isCompleted ? 'completed' : ''}" onclick="openLesson(${module.id}, ${lesson.id})">
+                        <div class="lesson-card-header">
+                            <div class="lesson-number">
+                                ${isCompleted ? '✅' : lesson.id}
+                            </div>
+                            <div class="lesson-duration">${lesson.duration}</div>
+                        </div>
+                        <div class="lesson-card-content">
+                            <h4>${lesson.title}</h4>
+                            <div class="lesson-status">
+                                ${isCompleted ? 'Concluída' : 'Disponível'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openLesson(moduleId, lessonId) {
+            // Create lesson content view
+            let lessonView = document.getElementById('lesson-content-view');
+            if (!lessonView) {
+                lessonView = document.createElement('div');
+                lessonView.id = 'lesson-content-view';
+                lessonView.className = 'lesson-content-view';
+                document.getElementById('dashboard').appendChild(lessonView);
+            }
+
+            const module = courseModules.find(m => m.id === moduleId);
+            const lessonContent = generateLessonContent(moduleId, lessonId);
+
+            lessonView.innerHTML = `
+                <div class="lesson-header">
+                    <button class="back-btn" onclick="backToModuleLessons()">
+                        ← Voltar às Aulas
+                    </button>
+                    <div class="lesson-info">
+                        <h1>${lessonContent.title}</h1>
+                        <div class="lesson-meta">
+                            <span>Módulo ${moduleId}: ${module.title}</span>
+                            <span>Aula ${lessonId} de 8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-content">
+                    ${lessonContent.content}
+                </div>
+
+                <div class="lesson-actions">
+                    <button class="complete-lesson-btn" onclick="markLessonComplete(${moduleId}, ${lessonId})">
+                        ✅ Marcar como Concluída
+                    </button>
+                    <div class="lesson-navigation">
+                        ${lessonId > 1 ? `<button class="nav-lesson-btn" onclick="openLesson(${moduleId}, ${lessonId - 1})">⬅️ Aula Anterior</button>` : ''}
+                        ${lessonId < 8 ? `<button class="nav-lesson-btn" onclick="openLesson(${moduleId}, ${lessonId + 1})">Próxima Aula ➡️</button>` : ''}
+                    </div>
+                </div>
+            `;
+
+            // Hide lessons view and show lesson content
+            document.getElementById('module-lessons-view').style.display = 'none';
+            lessonView.style.display = 'block';
+        }
+
+        function generateLessonContent(moduleId, lessonId) {
+            const lessons = {
+                1: {
+                    1: { title: "Introdução à Programação", content: `
+                        <div class="content-section">
+                            <h2>🎯 Objetivos da Aula</h2>
+                            <ul>
+                                <li>Entender o que é programação</li>
+                                <li>Conhecer a linguagem Python</li>
+                                <li>Configurar o ambiente de desenvolvimento</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="content-section">
+                            <h2>💡 O que é Programação?</h2>
+                            <p>Programação é a arte de dar instruções para o computador. É como escrever uma receita muito detalhada que o computador vai seguir exatamente.</p>
+                            
+                            <div class="example-box">
+                                <h4>Exemplo Prático:</h4>
+                                <pre><code>print("Olá, mundo!")
+print("Bem-vindo à GameCreators Academy!")</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="content-section">
+                            <h2>🐍 Por que Python?</h2>
+                            <p>Python é uma linguagem:</p>
+                            <ul>
+                                <li><strong>Fácil de aprender:</strong> Sintaxe simples e intuitiva</li>
+                                <li><strong>Poderosa:</strong> Usada por Google, Netflix, Instagram</li>
+                                <li><strong>Versátil:</strong> Web, jogos, IA, ciência de dados</li>
+                            </ul>
+                        </div>
+                    ` },
+                    2: { title: "Instalando Python", content: `
+                        <div class="content-section">
+                            <h2>🔧 Configurando seu Ambiente</h2>
+                            <p>Vamos instalar as ferramentas necessárias para programar.</p>
+                            
+                            <div class="step-by-step">
+                                <div class="step">
+                                    <h4>Passo 1: Download do Python</h4>
+                                    <p>Acesse <a href="https://python.org" target="_blank">python.org</a> e baixe a versão mais recente.</p>
+                                </div>
+                                <div class="step">
+                                    <h4>Passo 2: Instalação</h4>
+                                    <p>Execute o instalador e marque "Add to PATH".</p>
+                                </div>
+                                <div class="step">
+                                    <h4>Passo 3: Verificar Instalação</h4>
+                                    <pre><code>python --version</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    ` }
+                }
+            };
+
+            const moduleContent = lessons[moduleId];
+            if (moduleContent && moduleContent[lessonId]) {
+                return moduleContent[lessonId];
+            }
+
+            // Default content for lessons not specifically defined
+            return {
+                title: `Aula ${lessonId} - Módulo ${moduleId}`,
+                content: `
+                    <div class="content-section">
+                        <h2>📚 Conteúdo da Aula ${lessonId}</h2>
+                        <p>Esta aula contém conceitos importantes para seu desenvolvimento como programador.</p>
+                        
+                        <div class="highlight-box">
+                            <h4>🎯 Objetivos:</h4>
+                            <ul>
+                                <li>Dominar os conceitos fundamentais</li>
+                                <li>Aplicar conhecimento na prática</li>
+                                <li>Preparar-se para o próximo nível</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="example-box">
+                            <h4>💻 Exemplo Prático:</h4>
+                            <pre><code># Código de exemplo para a aula ${lessonId}
+def exemplo_aula_${lessonId}():
+    print("Aprendendo programação na GameCreators Academy!")
+    return True
+
+# Execute o exemplo
+exemplo_aula_${lessonId}()</code></pre>
+                        </div>
+                        
+                        <div class="exercise-box">
+                            <h4>🚀 Exercício Prático:</h4>
+                            <p>Complete o exercício proposto para fixar o conhecimento.</p>
+                        </div>
+                    </div>
+                `
+            };
+        }
+
+        function markLessonComplete(moduleId, lessonId) {
+            // Initialize completedLessons if it doesn't exist
+            if (!currentUser.completedLessons) {
+                currentUser.completedLessons = {};
+            }
+            if (!currentUser.completedLessons[moduleId]) {
+                currentUser.completedLessons[moduleId] = [];
+            }
+
+            // Add lesson to completed if not already there
+            if (!currentUser.completedLessons[moduleId].includes(lessonId)) {
+                currentUser.completedLessons[moduleId].push(lessonId);
+                
+                // Update progress
+                const completedCount = currentUser.completedLessons[moduleId].length;
+                const moduleProgress = Math.round((completedCount / 8) * 100);
+                
+                // Update user in database
+                const userInDB = studentsDatabase.find(s => s.ra === currentUser.ra);
+                if (userInDB) {
+                    userInDB.completedLessons = currentUser.completedLessons;
+                    userInDB.lastActivity = new Date().toISOString().split('T')[0];
+                }
+
+                alert(`🎉 Aula ${lessonId} concluída!\n\nProgresso no módulo: ${moduleProgress}%`);
+                
+                // Refresh the lesson view
+                openLesson(moduleId, lessonId);
+            } else {
+                alert('Esta aula já foi marcada como concluída!');
+            }
+        }
+
+        function backToModulesView() {
+            document.getElementById('module-lessons-view').style.display = 'none';
+            document.getElementById('modules-nav').style.display = 'block';
+            
+            // Hide lesson content if visible
+            const lessonView = document.getElementById('lesson-content-view');
+            if (lessonView) {
+                lessonView.style.display = 'none';
+            }
+        }
+
+        function backToModuleLessons() {
+            document.getElementById('lesson-content-view').style.display = 'none';
+            document.getElementById('module-lessons-view').style.display = 'block';
         }
 
         function showLockedMessage() {
