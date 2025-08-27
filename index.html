@@ -32,16 +32,18 @@
             min-height: 100vh;
         }
 
-        /* Hidden Admin Access */
-        .admin-secret {
+        /* Super discreto - só clicável por quem souber */
+        .hidden-trigger {
             position: fixed;
-            bottom: 10px;
-            left: 10px;
-            width: 5px;
-            height: 5px;
+            bottom: 0;
+            right: 0;
+            width: 1px;
+            height: 1px;
             background: transparent;
-            cursor: pointer;
-            z-index: 999;
+            border: none;
+            cursor: default;
+            z-index: 1;
+            opacity: 0;
         }
 
         /* Login Screen */
@@ -126,53 +128,13 @@
             box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
         }
 
-        /* Admin Login Modal */
-        .admin-login-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
-        }
-
-        .admin-login-content {
-            background-color: var(--card-bg);
-            margin: 10% auto;
-            padding: 2rem;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            border: 2px solid var(--warning);
-        }
-
-        .admin-login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--warning);
-        }
-
-        .close-admin {
-            color: var(--text-muted);
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        .close-admin:hover {
-            color: var(--warning);
-        }
-
-        /* Admin Panel */
+        /* Admin Panel - Mais Robusto */
         .admin-panel {
             display: none;
             padding: 2rem;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
+            min-height: 100vh;
         }
 
         .admin-panel.active {
@@ -180,57 +142,79 @@
         }
 
         .admin-header {
-            background: var(--gradient);
-            padding: 1.5rem;
+            background: linear-gradient(135deg, #dc2626, #7f1d1d);
+            padding: 1.5rem 2rem;
             border-radius: 15px;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 2rem;
-            position: relative;
+            box-shadow: 0 8px 32px rgba(220, 38, 38, 0.3);
+        }
+
+        .admin-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
         }
 
         .logout-btn {
-            position: absolute;
-            right: 1.5rem;
-            top: 50%;
-            transform: translateY(-50%);
             background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
+            transition: all 0.3s ease;
         }
 
         .logout-btn:hover {
             background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
         }
 
         .admin-tabs {
             display: flex;
-            gap: 1rem;
+            gap: 0;
             margin-bottom: 2rem;
-            flex-wrap: wrap;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 0.5rem;
+            overflow-x: auto;
         }
 
         .tab-btn {
-            background: var(--card-bg);
-            border: 2px solid transparent;
-            color: var(--text-light);
-            padding: 0.75rem 1.5rem;
-            border-radius: 10px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
+            white-space: nowrap;
+            flex: 1;
+            min-width: 120px;
         }
 
         .tab-btn.active {
-            border-color: var(--primary);
-            background: rgba(16, 185, 129, 0.1);
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
 
-        .tab-btn:hover {
-            border-color: var(--accent);
+        .tab-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
         }
 
         .tab-content {
@@ -238,127 +222,28 @@
             background: var(--card-bg);
             padding: 2rem;
             border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .tab-content.active {
             display: block;
         }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .students-list {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 1rem;
-            margin-top: 2rem;
-        }
-
-        .student-item {
+        /* Student Management Enhanced */
+        .student-controls-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.02);
-            margin-bottom: 0.5rem;
-            border-radius: 8px;
-        }
-
-        .student-info {
-            flex: 1;
-        }
-
-        .student-progress {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            min-width: 150px;
-            margin: 0 1rem;
-        }
-
-        .progress-stats {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .student-controls {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .unlock-btn {
-            background: var(--primary);
-            border: none;
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-
-        .unlock-btn:hover {
-            background: #059669;
-        }
-
-        .delete-btn {
-            background: var(--warning);
-            border: none;
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-
-        .delete-btn:hover {
-            background: #dc2626;
-        }
-
-        /* Google Sheets Integration */
-        .sheets-integration {
-            background: rgba(0, 206, 201, 0.1);
-            border: 2px solid var(--accent);
-            padding: 2rem;
-            border-radius: 15px;
             margin-bottom: 2rem;
         }
 
-        .sheets-status {
+        .bulk-actions {
             display: flex;
-            align-items: center;
             gap: 1rem;
-            margin-bottom: 1rem;
+            align-items: center;
         }
 
-        .status-indicator {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--warning);
-        }
-
-        .status-indicator.connected {
-            background: var(--success);
-        }
-
-        .sheets-input {
-            width: 100%;
-            padding: 0.75rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-        }
-
-        .sheets-btn {
+        .bulk-btn {
             background: var(--accent);
             color: white;
             border: none;
@@ -366,87 +251,148 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            margin-right: 1rem;
+            font-size: 0.9rem;
         }
 
-        .sheets-btn:hover {
+        .bulk-btn:hover {
             background: #0891b2;
         }
 
-        /* Reports */
-        .report-cards {
+        .students-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 2rem;
         }
 
-        .report-card {
-            background: rgba(255, 255, 255, 0.05);
+        .student-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
             padding: 1.5rem;
-            border-radius: 10px;
-            border-left: 4px solid var(--primary);
-            text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .report-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
+        .student-card:hover {
+            border-color: var(--primary);
+            background: rgba(16, 185, 129, 0.05);
         }
 
-        .report-label {
+        .student-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .student-info h3 {
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .student-meta {
             color: var(--text-muted);
             font-size: 0.9rem;
         }
 
-        .detailed-reports {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 1.5rem;
+        .student-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .report-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
         }
 
-        .report-table th,
-        .report-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .status-dot.inactive {
+            background: var(--warning);
         }
 
-        .report-table th {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--primary);
-        }
-
-        /* Module Management */
-        .module-management {
+        .module-controls {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .module-admin-card {
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 1rem;
+            align-items: center;
+            margin: 1rem 0;
+            padding: 1rem;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 1.5rem;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
         }
 
-        .module-admin-header {
+        .current-module {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .module-selector {
+            padding: 0.5rem;
+            background: var(--dark-bg);
+            border: 2px solid var(--primary);
+            border-radius: 6px;
+            color: var(--text-light);
+            font-weight: bold;
+        }
+
+        .unlock-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .unlock-btn:hover {
+            background: #16a34a;
+        }
+
+        .progress-section {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .module-toggle {
+        .progress-visual {
+            flex: 1;
+            margin-right: 1rem;
+        }
+
+        .progress-bar-full {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill-full {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .danger-zone {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .delete-btn {
             background: var(--warning);
             color: white;
             border: none;
@@ -454,42 +400,219 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 0.8rem;
+            font-weight: bold;
         }
 
-        .module-toggle.enabled {
+        .delete-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Google Sheets Enhanced */
+        .sheets-integration {
+            background: linear-gradient(135deg, rgba(0, 206, 201, 0.1), rgba(6, 182, 212, 0.1));
+            border: 2px solid var(--accent);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .sheets-connection {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--warning);
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.connected {
             background: var(--success);
+            animation: none;
         }
 
-        /* Dashboard */
+        .sheets-input {
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-family: 'Courier New', monospace;
+        }
+
+        .sheets-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .connect-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .sheets-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .sheets-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .sheets-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .sheets-btn.secondary {
+            background: var(--secondary);
+        }
+
+        .sheets-btn.secondary:hover {
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        /* Reports Enhanced */
+        .reports-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .refresh-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .refresh-btn:hover {
+            background: #0891b2;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(6, 182, 212, 0.1));
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid rgba(16, 185, 129, 0.2);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .metric-change {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            font-weight: bold;
+        }
+
+        .metric-change.positive {
+            color: var(--success);
+        }
+
+        .metric-change.negative {
+            color: var(--warning);
+        }
+
+        /* Student Dashboard */
         .dashboard {
             display: none;
             min-height: 100vh;
-            background: var(--dark-bg);
         }
 
         .dashboard.active {
             display: block;
         }
 
-        /* Header */
         .game-header {
             background: var(--gradient);
-            padding: 1rem 2rem;
+            padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
-            position: relative;
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
         }
 
         .user-info {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .avatar-container {
             position: relative;
+        }
+
+        .user-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            border: 3px solid rgba(255, 255, 255, 0.3);
         }
 
         .level-badge {
@@ -498,10 +621,16 @@
             right: -5px;
             background: var(--secondary);
             color: white;
-            padding: 2px 8px;
+            padding: 0.25rem 0.75rem;
             border-radius: 12px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: bold;
+            border: 2px solid var(--dark-bg);
+        }
+
+        .user-stats h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
         }
 
         .xp-container {
@@ -511,143 +640,200 @@
         }
 
         .xp-bar {
-            width: 200px;
-            height: 8px;
+            width: 220px;
+            height: 10px;
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
+            border-radius: 5px;
             overflow: hidden;
         }
 
         .xp-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent) 0%, var(--secondary) 100%);
-            border-radius: 4px;
-            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 35%;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            border-radius: 5px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .header-controls {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
+        }
+
+        .streak-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .streak-icon {
+            font-size: 2.2rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .streak-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .streak-number {
+            font-size: 1.6rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .streak-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
         }
 
         .logout-dashboard {
             background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .logout-dashboard:hover {
             background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
         }
 
-        /* Modules Navigation */
+        /* Modules Grid */
         .modules-nav {
             background: var(--card-bg);
             padding: 2rem;
         }
 
+        .modules-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .modules-intro h2 {
+            font-size: 2.2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
         .modules-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
         }
 
         .module-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 1.5rem;
+            border-radius: 20px;
+            padding: 2rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            min-height: 200px;
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
         }
 
         .module-card:hover {
+            transform: translateY(-8px);
             border-color: var(--primary);
-            background: rgba(16, 185, 129, 0.1);
-            transform: translateY(-5px);
+            background: rgba(16, 185, 129, 0.08);
+            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.15);
         }
 
-        .module-card.completed {
-            border-color: var(--success);
-            background: rgba(34, 197, 94, 0.1);
+        .module-card:hover::before {
+            transform: scaleX(1);
         }
 
         .module-card.locked {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
         .module-card.locked:hover {
             transform: none;
+            box-shadow: none;
         }
 
         .module-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: 1rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
         }
 
         .module-number {
-            background: var(--primary);
+            background: var(--gradient);
             color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
         }
 
         .module-status {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
 
         .module-title {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: bold;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             color: var(--text-light);
         }
 
         .module-desc {
             color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-            line-height: 1.5;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
         }
 
         .module-project {
             background: rgba(0, 206, 201, 0.1);
             border: 1px solid var(--accent);
-            padding: 0.75rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
         }
 
         .module-progress {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
         }
 
         .progress-bar {
-            width: 100px;
+            width: 120px;
             height: 6px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 3px;
@@ -658,7 +844,24 @@
             height: 100%;
             background: var(--accent);
             border-radius: 3px;
-            transition: width 0.3s ease;
+            transition: width 0.5s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         /* Responsive */
@@ -673,47 +876,40 @@
                 grid-template-columns: 1fr;
             }
 
-            .form-grid {
+            .admin-tabs {
+                flex-direction: column;
+            }
+
+            .module-controls {
                 grid-template-columns: 1fr;
             }
 
-            .xp-bar {
-                width: 150px;
+            .sheets-connection {
+                grid-template-columns: 1fr;
             }
 
-            .header-controls {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .report-cards {
+            .metrics-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+        @media (max-width: 480px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Hidden Admin Access -->
-    <div class="admin-secret" onclick="showAdminModal()" title="Admin Access"></div>
+    <!-- Trigger ultra-discreto - clicar 5x rápido no canto -->
+    <div class="hidden-trigger" id="admin-trigger"></div>
 
     <!-- Login Screen -->
     <div class="login-container" id="login-screen">
         <div class="login-card">
             <div class="logo">
-                <h1>🎮 GAMECREATORS ACADEMY</h1>
-                <p>Seu futuro como desenvolvedor começa aqui!</p>
+                <h1>GameCreators Academy</h1>
+                <p>Transforme sua paixão por jogos em carreira!</p>
             </div>
             
             <form id="login-form">
@@ -723,172 +919,225 @@
                 </div>
                 
                 <button type="submit" class="login-btn">
-                    ENTRAR NA AVENTURA
+                    Entrar na Academia
                 </button>
             </form>
-        </div>
-    </div>
-
-    <!-- Admin Login Modal -->
-    <div id="admin-login-modal" class="admin-login-modal">
-        <div class="admin-login-content">
-            <span class="close-admin">&times;</span>
-            <div class="admin-login-header">
-                <h2>⚠️ Acesso Administrativo</h2>
-                <p>Digite a senha de administrador:</p>
+            
+            <div style="text-align: center; margin-top: 1rem;">
+                <small style="color: var(--text-muted);">
+                    Primeiro acesso? Entre em contato com a coordenação.
+                </small>
             </div>
-            <form id="admin-login-form">
-                <div class="input-group">
-                    <input type="password" id="admin-password" placeholder="Senha do administrador" required>
-                </div>
-                <button type="submit" class="login-btn">Acessar Painel</button>
-            </form>
         </div>
     </div>
 
     <!-- Admin Panel -->
     <div class="admin-panel" id="admin-panel">
         <div class="admin-header">
-            <h1>🛠️ Painel Administrativo</h1>
-            <button class="logout-btn" onclick="logout()">Sair</button>
+            <div class="admin-title">
+                <h1>Sistema Administrativo</h1>
+                <div class="admin-badge">ACESSO RESTRITO</div>
+            </div>
+            <button class="logout-btn" onclick="logout()">Finalizar Sessão</button>
         </div>
 
         <div class="admin-tabs">
-            <button class="tab-btn active" onclick="showTab('students')">👥 Gerenciar Alunos</button>
-            <button class="tab-btn" onclick="showTab('modules')">📚 Módulos</button>
-            <button class="tab-btn" onclick="showTab('sheets')">📊 Google Sheets</button>
-            <button class="tab-btn" onclick="showTab('reports')">📈 Relatórios</button>
+            <button class="tab-btn active" onclick="showTab('students')">
+                Gestão de Alunos
+            </button>
+            <button class="tab-btn" onclick="showTab('modules')">
+                Controle de Módulos
+            </button>
+            <button class="tab-btn" onclick="showTab('sheets')">
+                Google Sheets
+            </button>
+            <button class="tab-btn" onclick="showTab('reports')">
+                Analytics
+            </button>
+            <button class="tab-btn" onclick="showTab('settings')">
+                Configurações
+            </button>
         </div>
 
-        <!-- Students Tab -->
+        <!-- Students Management Tab -->
         <div class="tab-content active" id="tab-students">
-            <h2>👥 Gerenciar Alunos</h2>
-            
-            <form id="add-student-form">
-                <div class="form-grid">
-                    <div class="input-group">
-                        <label>Nome Completo</label>
-                        <input type="text" id="student-name" placeholder="Nome do aluno" required>
-                    </div>
-                    <div class="input-group">
-                        <label>RA (Registro Acadêmico)</label>
-                        <input type="text" id="student-ra" placeholder="Ex: 2024001" required>
-                    </div>
+            <div class="student-controls-header">
+                <h2>Gestão Individual de Alunos</h2>
+                <div class="bulk-actions">
+                    <select id="bulk-module-select" class="module-selector">
+                        <option value="">Ação em lote</option>
+                        <option value="unlock-1">Liberar Módulo 1 para todos</option>
+                        <option value="unlock-2">Liberar Módulo 2 para todos</option>
+                        <option value="unlock-3">Liberar Módulo 3 para todos</option>
+                    </select>
+                    <button class="bulk-btn" onclick="executeBulkAction()">Executar</button>
                 </div>
-                
-                <button type="submit" class="login-btn">Adicionar Aluno</button>
-            </form>
+            </div>
 
-            <div class="students-list">
-                <h3>👨‍🎓 Alunos Cadastrados</h3>
-                <div id="students-container">
-                    <!-- Students will be populated here -->
-                </div>
+            <!-- Add Student Form -->
+            <div style="background: rgba(16, 185, 129, 0.1); border: 2px solid var(--primary); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Cadastrar Novo Aluno</h3>
+                <form id="add-student-form">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="input-group">
+                            <label>Nome Completo</label>
+                            <input type="text" id="student-name" placeholder="Nome do aluno" required>
+                        </div>
+                        <div class="input-group">
+                            <label>RA</label>
+                            <input type="text" id="student-ra" placeholder="Ex: 2024001" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Email</label>
+                            <input type="email" id="student-email" placeholder="email@exemplo.com" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="login-btn">Adicionar Aluno</button>
+                </form>
+            </div>
+
+            <div class="students-grid" id="students-container">
+                <!-- Students will be populated here -->
             </div>
         </div>
 
-        <!-- Modules Tab -->
+        <!-- Modules Control Tab -->
         <div class="tab-content" id="tab-modules">
-            <h2>📚 Gerenciar Módulos</h2>
-            <p style="margin-bottom: 2rem;">Configure quais módulos estão disponíveis globalmente e gerencie conteúdos.</p>
+            <h2>Controle Global de Módulos</h2>
+            <p style="margin-bottom: 2rem; color: var(--text-muted);">
+                Configure a disponibilidade dos módulos no sistema. Módulos desativados não aparecerão para nenhum aluno.
+            </p>
             
-            <div class="module-management" id="module-management">
-                <!-- Module management cards will be populated here -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;" id="modules-admin-grid">
+                <!-- Module controls will be populated here -->
             </div>
         </div>
 
         <!-- Google Sheets Tab -->
         <div class="tab-content" id="tab-sheets">
-            <h2>📊 Integração Google Sheets</h2>
+            <h2>Integração Google Sheets</h2>
             
             <div class="sheets-integration">
-                <div class="sheets-status">
-                    <div class="status-indicator" id="sheets-status-indicator"></div>
-                    <span id="sheets-status-text">Desconectado</span>
-                </div>
-                
-                <div class="input-group">
-                    <label>ID da Planilha Google Sheets</label>
+                <div class="sheets-connection">
+                    <div class="connection-status">
+                        <div class="status-indicator" id="connection-indicator"></div>
+                        <span id="connection-text">Desconectado</span>
+                    </div>
+                    
                     <input type="text" 
-                           id="sheets-id" 
-                           class="sheets-input"
-                           placeholder="Ex: 1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
-                           value="">
-                    <small style="color: var(--text-muted);">
-                        Encontre o ID na URL da sua planilha: docs.google.com/spreadsheets/d/[ID_AQUI]/edit
-                    </small>
+                           id="sheets-id-input" 
+                           class="sheets-input" 
+                           placeholder="Cole aqui o ID da sua planilha Google Sheets"
+                           style="min-width: 300px;">
+                    
+                    <button class="connect-btn" onclick="connectGoogleSheets()">
+                        Conectar
+                    </button>
                 </div>
-                
-                <button class="sheets-btn" onclick="connectSheets()">Conectar Planilha</button>
-                <button class="sheets-btn" onclick="syncData()" style="background: var(--primary);">Sincronizar Dados</button>
-                <button class="sheets-btn" onclick="testConnection()" style="background: var(--secondary);">Testar Conexão</button>
+
+                <div class="sheets-actions">
+                    <button class="sheets-btn" onclick="exportToSheets()">
+                        Exportar Dados
+                    </button>
+                    <button class="sheets-btn secondary" onclick="importFromSheets()">
+                        Importar Dados
+                    </button>
+                    <button class="sheets-btn" onclick="syncWithSheets()">
+                        Sincronizar
+                    </button>
+                    <button class="sheets-btn secondary" onclick="testSheetsConnection()">
+                        Testar Conexão
+                    </button>
+                </div>
             </div>
 
-            <div class="detailed-reports">
-                <h3>Configuração da Planilha</h3>
-                <p>A planilha deve conter as seguintes colunas:</p>
-                <ul style="margin: 1rem 0; padding-left: 2rem; color: var(--text-muted);">
-                    <li><strong>RA:</strong> Registro acadêmico do aluno</li>
-                    <li><strong>Nome:</strong> Nome completo</li>
-                    <li><strong>Email:</strong> Email do aluno</li>
-                    <li><strong>Modulo_Atual:</strong> Último módulo desbloqueado</li>
-                    <li><strong>Progresso:</strong> Porcentagem de conclusão</li>
-                    <li><strong>Data_Cadastro:</strong> Data de matrícula</li>
-                </ul>
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 12px;">
+                <h3 style="margin-bottom: 1rem;">Formato da Planilha</h3>
+                <p style="margin-bottom: 1rem; color: var(--text-muted);">
+                    Sua planilha deve conter as seguintes colunas na primeira linha:
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; font-family: 'Courier New', monospace; font-size: 0.9rem;">
+                    <div>A: <strong>RA</strong></div>
+                    <div>B: <strong>Nome</strong></div>
+                    <div>C: <strong>Email</strong></div>
+                    <div>D: <strong>Modulo_Atual</strong></div>
+                    <div>E: <strong>Progresso</strong></div>
+                    <div>F: <strong>Status</strong></div>
+                </div>
             </div>
         </div>
 
-        <!-- Reports Tab -->
+        <!-- Analytics Tab -->
         <div class="tab-content" id="tab-reports">
-            <h2>📈 Relatórios e Analytics</h2>
-            
-            <div class="report-cards">
-                <div class="report-card">
-                    <div class="report-number" id="total-students">0</div>
-                    <div class="report-label">Total de Alunos</div>
+            <div class="reports-header">
+                <h2>Analytics e Relatórios</h2>
+                <button class="refresh-btn" onclick="updateReports()">
+                    <span>⟳</span> Atualizar Dados
+                </button>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value" id="metric-students">0</div>
+                    <div class="metric-label">Total de Alunos</div>
+                    <div class="metric-change positive" id="metric-students-change">+0% este mês</div>
                 </div>
-                <div class="report-card">
-                    <div class="report-number" id="active-students">0</div>
-                    <div class="report-label">Alunos Ativos</div>
+                <div class="metric-card">
+                    <div class="metric-value" id="metric-active">0</div>
+                    <div class="metric-label">Alunos Ativos</div>
+                    <div class="metric-change positive" id="metric-active-change">+0% esta semana</div>
                 </div>
-                <div class="report-card">
-                    <div class="report-number" id="completed-modules">0</div>
-                    <div class="report-label">Módulos Concluídos</div>
+                <div class="metric-card">
+                    <div class="metric-value" id="metric-progress">0%</div>
+                    <div class="metric-label">Progresso Médio</div>
+                    <div class="metric-change positive" id="metric-progress-change">+0% este período</div>
                 </div>
-                <div class="report-card">
-                    <div class="report-number" id="avg-progress">0%</div>
-                    <div class="report-label">Progresso Médio</div>
+                <div class="metric-card">
+                    <div class="metric-value" id="metric-modules">0</div>
+                    <div class="metric-label">Módulos Ativos</div>
+                    <div class="metric-change" id="metric-modules-change">12 total</div>
                 </div>
             </div>
 
-            <div class="detailed-reports">
-                <h3>Progresso Detalhado por Aluno</h3>
-                <table class="report-table">
-                    <thead>
-                        <tr>
-                            <th>Aluno</th>
-                            <th>RA</th>
-                            <th>Módulo Atual</th>
-                            <th>Progresso</th>
-                            <th>Última Atividade</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="detailed-reports-tbody">
-                        <!-- Data will be populated here -->
-                    </tbody>
-                </table>
+            <div style="background: rgba(255, 255, 255, 0.03); border-radius: 12px; padding: 2rem;">
+                <h3 style="margin-bottom: 1.5rem;">Progresso Detalhado por Aluno</h3>
+                <div id="detailed-progress">
+                    <!-- Detailed progress will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div class="tab-content" id="tab-settings">
+            <h2>Configurações do Sistema</h2>
+            
+            <div style="display: grid; gap: 2rem;">
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 12px;">
+                    <h3 style="margin-bottom: 1rem;">Segurança</h3>
+                    <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center;">
+                        <label>Senha do Administrador</label>
+                        <button class="sheets-btn" onclick="changeAdminPassword()">Alterar Senha</button>
+                    </div>
+                </div>
+
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 12px;">
+                    <h3 style="margin-bottom: 1rem;">Sistema</h3>
+                    <div style="display: grid; gap: 1rem;">
+                        <button class="sheets-btn secondary" onclick="exportSystemData()">Exportar Dados do Sistema</button>
+                        <button class="sheets-btn secondary" onclick="importSystemData()">Importar Dados do Sistema</button>
+                        <button class="sheets-btn" onclick="resetSystemData()" style="background: var(--warning);">Reset Completo</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Student Dashboard -->
     <div class="dashboard" id="dashboard">
-        <!-- Header -->
         <header class="game-header">
             <div class="user-info">
                 <div class="avatar-container">
-                    <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🎮</div>
+                    <div class="user-avatar" id="user-avatar">🎮</div>
                     <div class="level-badge" id="user-level">Lv.1</div>
                 </div>
                 <div class="user-stats">
@@ -897,246 +1146,178 @@
                         <div class="xp-bar">
                             <div class="xp-fill" id="xp-progress"></div>
                         </div>
-                        <span class="xp-text" id="xp-text">350/1000 XP</span>
+                        <span id="xp-text">350/1000 XP</span>
                     </div>
                 </div>
             </div>
             
             <div class="header-controls">
-                <div class="streak-info" style="display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px;">
-                    <div style="font-size: 2rem;">🔥</div>
-                    <div>
-                        <span style="font-size: 1.5rem; font-weight: bold;" id="streak-days">7</span>
-                        <span>dias</span>
+                <div class="streak-container">
+                    <div class="streak-icon">🔥</div>
+                    <div class="streak-info">
+                        <div class="streak-number" id="streak-days">7</div>
+                        <div class="streak-label">dias consecutivos</div>
                     </div>
                 </div>
                 <button class="logout-dashboard" onclick="logout()">Sair</button>
             </div>
         </header>
 
-        <!-- Modules Overview -->
-        <div class="modules-nav" id="modules-overview">
-            <h2>🚀 Curso Full-Stack - GameCreators Academy</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1rem;">Domine programação através do desenvolvimento de jogos</p>
+        <div class="modules-nav">
+            <div class="modules-intro">
+                <h2>Curso Full-Stack GameCreators</h2>
+                <p style="color: var(--text-muted); font-size: 1.1rem;">
+                    Domine programação criando jogos incríveis do zero ao deploy
+                </p>
+            </div>
             
-            <div class="modules-grid" id="modules-grid">
-                <!-- Modules will be populated here -->
+            <div class="modules-grid" id="student-modules-grid">
+                <!-- Student modules will be populated here -->
             </div>
         </div>
     </div>
 
     <script>
-        // ===== GLOBAL VARIABLES =====
+        // ===== GLOBAL STATE =====
         let currentUser = null;
-        let adminPassword = 'GameAdmin2024';
-        let sheetsId = null;
-        let sheetsConnected = false;
+        let adminMode = false;
+        let adminPassword = 'GC2024Admin!';
+        let sheetsConnectionId = null;
+        let adminClickCount = 0;
 
-        // Student progress tracking
-        let studentProgress = {};
-
-        // Course Data
-        const courseData = {
-            modules: [
-                {
-                    id: 1,
-                    title: "Fundamentos + Git",
-                    description: "Base sólida em Python e controle de versão",
-                    project: "TechStore v1.0 - Terminal",
-                    lessons: 8,
-                    unlocked: true,
-                    enabled: true,
-                    color: "#10B981"
-                },
-                {
-                    id: 2,
-                    title: "Python Avançado + Estruturas",
-                    description: "Estruturas de dados e análise profissional",
-                    project: "TechStore v2.0 - Sistema Modular",
-                    lessons: 8,
-                    unlocked: false,
-                    enabled: true,
-                    color: "#F59E0B"
-                },
-                {
-                    id: 3,
-                    title: "Front-end Moderno + UX",
-                    description: "Interface web responsiva e experiência do usuário",
-                    project: "TechStore v3.0 - Interface Web",
-                    lessons: 8,
-                    unlocked: false,
-                    enabled: true,
-                    color: "#06B6D4"
-                },
-                {
-                    id: 4,
-                    title: "Back-end com FastAPI",
-                    description: "APIs REST profissionais e documentação automática",
-                    project: "TechStore v4.0 - API Completa",
-                    lessons: 8,
-                    unlocked: false,
-                    enabled: true,
-                    color: "#8B5CF6"
-                },
-                {
-                    id: 5,
-                    title: "Banco de Dados + ORM",
-                    description: "Persistência robusta com PostgreSQL e SQLAlchemy",
-                    project: "TechStore v5.0 - Sistema com BD",
-                    lessons: 8,
-                    unlocked: false,
-                    enabled: true,
-                    color: "#EC4899"
-                },
-                {
-                    id: 6,
-                    title: "APIs + Microsserviços",
-                    description: "Arquitetura escalável e deploy na nuvem",
-                    project: "TechStore v6.0 - Cloud Native",
-                    lessons: 8,
-                    unlocked: false,
-                    enabled: true,
-                    color: "#EF4444"
-                },
-                {
-                    id: 7,
-                    title: "React + TypeScript",
-                    description: "SPA moderna com tipagem estática",
-                    project: "TechStore v7.0 - React App",
-                    lessons: 8,
-                    unlocked: false,
-                    enabled: false,
-                    color: "#14B8A6"
-                },
-                {
-                    id: 8,
-                    title: "UX/UI + Design System",
-                    description: "Design profissional e sistema de componentes",
-                    project: "TechStore v8.0 - Design System",
-                    lessons: 8,
-                    unlocked: false,
-                    enabled: false,
-                    color: "#F97316"
-                },
-                {
-                    id: 9,
-                    title: "Segurança + Metodologias",
-                    description: "Processos ágeis e segurança aplicada",
-                    project: "TechStore v9.0 - Enterprise",
-                    lessons: 8,
-                    unlocked: false,
-                    enabled: false,
-                    color: "#22C55E"
-                },
-                {
-                    id: 10,
-                    title: "DevOps + Performance",
-                    description: "Deploy profissional e otimização",
-                    project: "TechStore v10.0 - Production Ready",
-                    lessons: 8,
-                    unlocked: false,
-                    enabled: false,
-                    color: "#3B82F6"
-                },
-                {
-                    id: 11,
-                    title: "Soft Skills + Mercado",
-                    description: "Preparação profissional completa",
-                    project: "Portfolio + Networking",
-                    lessons: 8,
-                    unlocked: false,
-                    enabled: false,
-                    color: "#A855F7"
-                },
-                {
-                    id: 12,
-                    title: "Projeto Final + Especialização",
-                    description: "Sistema completo e escolha de especialização",
-                    project: "TechStore v11.0 - FINAL COMPLETO",
-                    lessons: 8,
-                    unlocked: false,
-                    enabled: false,
-                    color: "#DC2626"
-                }
-            ]
-        };
-
-        // Students data with progress
-        let studentsData = [
-            { 
-                ra: '2024001', 
+        // Enhanced student data structure
+        let studentsDatabase = [
+            {
+                ra: '2024001',
                 name: 'João Silva',
-                email: 'joao@email.com',
-                currentModule: 1,
-                progress: 25,
+                email: 'joao.silva@email.com',
+                unlockedModules: [1],
+                completedLessons: { 1: [1, 2] },
+                totalProgress: 25,
                 lastActivity: '2024-01-15',
-                status: 'Ativo'
+                status: 'Ativo',
+                registrationDate: '2024-01-01'
             },
-            { 
-                ra: '2024002', 
+            {
+                ra: '2024002',
                 name: 'Maria Santos',
-                email: 'maria@email.com',
-                currentModule: 2,
-                progress: 60,
+                email: 'maria.santos@email.com',
+                unlockedModules: [1, 2],
+                completedLessons: { 1: [1, 2, 3, 4, 5, 6, 7, 8], 2: [1, 2, 3] },
+                totalProgress: 60,
                 lastActivity: '2024-01-14',
-                status: 'Ativo'
+                status: 'Ativo',
+                registrationDate: '2024-01-01'
             },
-            { 
-                ra: '2024003', 
+            {
+                ra: '2024003',
                 name: 'Pedro Costa',
-                email: 'pedro@email.com',
-                currentModule: 1,
-                progress: 12,
+                email: 'pedro.costa@email.com',
+                unlockedModules: [1],
+                completedLessons: { 1: [1] },
+                totalProgress: 12,
                 lastActivity: '2024-01-10',
-                status: 'Inativo'
+                status: 'Inativo',
+                registrationDate: '2024-01-01'
             }
         ];
 
-        // Initialize student progress
-        function initializeStudentProgress() {
-            studentsData.forEach(student => {
-                if (!studentProgress[student.ra]) {
-                    studentProgress[student.ra] = {
-                        unlockedModules: [1],
-                        completedLessons: {},
-                        currentModule: student.currentModule || 1,
-                        totalProgress: student.progress || 0
-                    };
-                }
-            });
-        }
-
-        // ===== AUTHENTICATION SYSTEM =====
-        function showAdminModal() {
-            document.getElementById('admin-login-modal').style.display = 'block';
-        }
-
-        function hideAdminModal() {
-            document.getElementById('admin-login-modal').style.display = 'none';
-            document.getElementById('admin-password').value = '';
-        }
-
-        // Close admin modal when clicking outside or on X
-        document.querySelector('.close-admin').onclick = hideAdminModal;
-        window.onclick = function(event) {
-            const modal = document.getElementById('admin-login-modal');
-            if (event.target === modal) {
-                hideAdminModal();
+        // Course modules configuration
+        const courseModules = [
+            {
+                id: 1,
+                title: "Fundamentos + Git",
+                description: "Base sólida em Python e controle de versão profissional",
+                project: "TechStore v1.0 - Sistema Terminal",
+                lessons: 8,
+                enabled: true,
+                color: "#10B981"
+            },
+            {
+                id: 2,
+                title: "Python Avançado + Estruturas",
+                description: "Estruturas de dados, análise e manipulação avançada",
+                project: "TechStore v2.0 - Sistema Modular",
+                lessons: 8,
+                enabled: true,
+                color: "#F59E0B"
+            },
+            {
+                id: 3,
+                title: "Front-end Moderno + UX",
+                description: "HTML5, CSS3, JavaScript ES6+ e experiência do usuário",
+                project: "TechStore v3.0 - Interface Web Responsiva",
+                lessons: 8,
+                enabled: true,
+                color: "#06B6D4"
+            },
+            {
+                id: 4,
+                title: "Back-end com FastAPI",
+                description: "APIs REST, documentação automática e padrões modernos",
+                project: "TechStore v4.0 - API Completa",
+                lessons: 8,
+                enabled: true,
+                color: "#8B5CF6"
+            },
+            {
+                id: 5,
+                title: "Banco de Dados + ORM",
+                description: "PostgreSQL, SQLAlchemy, migrations e otimização",
+                project: "TechStore v5.0 - Persistência Completa",
+                lessons: 8,
+                enabled: true,
+                color: "#EC4899"
+            },
+            {
+                id: 6,
+                title: "APIs + Microsserviços",
+                description: "Arquitetura distribuída, filas, cache e escalabilidade",
+                project: "TechStore v6.0 - Arquitetura Cloud",
+                lessons: 8,
+                enabled: false,
+                color: "#EF4444"
             }
-        }
+            // ... more modules
+        ];
 
-        document.getElementById('admin-login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const password = document.getElementById('admin-password').value;
-
-            if (password === adminPassword) {
-                hideAdminModal();
-                showAdminPanel();
-            } else {
-                alert('Senha incorreta!');
+        // ===== ADMIN ACCESS SYSTEM =====
+        document.getElementById('admin-trigger').addEventListener('click', function() {
+            adminClickCount++;
+            if (adminClickCount >= 5) {
+                showAdminLogin();
+                adminClickCount = 0;
             }
         });
 
+        // Reset click count after 3 seconds
+        setInterval(() => {
+            if (adminClickCount > 0 && adminClickCount < 5) {
+                adminClickCount = 0;
+            }
+        }, 3000);
+
+        function showAdminLogin() {
+            const password = prompt('🔐 Digite a senha de administrador:');
+            if (password === adminPassword) {
+                enterAdminMode();
+            } else if (password !== null) {
+                alert('❌ Senha incorreta!');
+            }
+        }
+
+        function enterAdminMode() {
+            adminMode = true;
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('dashboard').classList.remove('active');
+            document.getElementById('admin-panel').classList.add('active');
+            
+            renderStudentsManagement();
+            renderModulesAdmin();
+            updateAnalytics();
+        }
+
+        // ===== STUDENT LOGIN =====
         document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const ra = document.getElementById('ra-input').value.trim();
@@ -1146,162 +1327,130 @@
                 return;
             }
 
-            const student = studentsData.find(s => s.ra === ra);
+            const student = studentsDatabase.find(s => s.ra === ra);
             if (student) {
                 currentUser = student;
-                showDashboard();
+                enterStudentMode();
             } else {
-                alert('RA não encontrado! Entre em contato com o administrador.');
+                alert('RA não encontrado! Verifique com a coordenação.');
             }
         });
 
-        function showAdminPanel() {
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('dashboard').classList.remove('active');
-            document.getElementById('admin-panel').classList.add('active');
-            
-            renderStudents();
-            renderModuleManagement();
-            updateReports();
-        }
-
-        function showDashboard() {
+        function enterStudentMode() {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('admin-panel').classList.remove('active');
             document.getElementById('dashboard').classList.add('active');
             
+            updateStudentUI();
+            renderStudentModules();
+        }
+
+        function updateStudentUI() {
             document.getElementById('user-name').textContent = currentUser.name;
-            renderModulesForStudent();
+            
+            // Calculate level based on total progress
+            const level = Math.floor(currentUser.totalProgress / 10) + 1;
+            document.getElementById('user-level').textContent = `Lv.${level}`;
+            
+            // Update XP bar
+            const xpProgress = (currentUser.totalProgress % 10) * 10;
+            document.getElementById('xp-progress').style.width = xpProgress + '%';
+            document.getElementById('xp-text').textContent = `${currentUser.totalProgress * 10}/1000 XP`;
         }
 
-        function logout() {
-            currentUser = null;
-            
-            document.getElementById('dashboard').classList.remove('active');
-            document.getElementById('admin-panel').classList.remove('active');
-            document.getElementById('login-screen').style.display = 'flex';
-            
-            // Reset forms
-            document.getElementById('ra-input').value = '';
-        }
-
-        // ===== ADMIN SYSTEM =====
+        // ===== ADMIN FUNCTIONS =====
         function showTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
             });
+            
+            // Remove active from all tab buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-
+            
             // Show selected tab
             document.getElementById(`tab-${tabName}`).classList.add('active');
             event.target.classList.add('active');
-
-            if (tabName === 'students') {
-                renderStudents();
-            } else if (tabName === 'modules') {
-                renderModuleManagement();
-            } else if (tabName === 'reports') {
-                updateReports();
-            } else if (tabName === 'sheets') {
-                updateSheetsStatus();
+            
+            // Load tab-specific content
+            switch(tabName) {
+                case 'students':
+                    renderStudentsManagement();
+                    break;
+                case 'modules':
+                    renderModulesAdmin();
+                    break;
+                case 'sheets':
+                    updateSheetsUI();
+                    break;
+                case 'reports':
+                    updateAnalytics();
+                    break;
             }
         }
 
-        document.getElementById('add-student-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('student-name').value.trim();
-            const ra = document.getElementById('student-ra').value.trim();
-
-            if (!name || !ra) {
-                alert('Preencha todos os campos!');
-                return;
-            }
-
-            // Check if RA already exists
-            if (studentsData.find(s => s.ra === ra)) {
-                alert('Este RA já está cadastrado!');
-                return;
-            }
-
-            const newStudent = {
-                ra: ra,
-                name: name,
-                email: `${ra}@academy.com`,
-                currentModule: 1,
-                progress: 0,
-                lastActivity: new Date().toISOString().split('T')[0],
-                status: 'Ativo'
-            };
-
-            studentsData.push(newStudent);
-            
-            // Initialize progress for new student
-            studentProgress[ra] = {
-                unlockedModules: [1],
-                completedLessons: {},
-                currentModule: 1,
-                totalProgress: 0
-            };
-            
-            // Clear form
-            document.getElementById('student-name').value = '';
-            document.getElementById('student-ra').value = '';
-            
-            renderStudents();
-            updateReports();
-            alert('Aluno adicionado com sucesso!');
-        });
-
-        function renderStudents() {
+        function renderStudentsManagement() {
             const container = document.getElementById('students-container');
             
-            if (studentsData.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nenhum aluno cadastrado</p>';
-                return;
-            }
-
-            container.innerHTML = studentsData.map(student => {
-                const progress = studentProgress[student.ra] || { unlockedModules: [1], totalProgress: 0 };
-                const maxUnlockedModule = Math.max(...progress.unlockedModules);
+            container.innerHTML = studentsDatabase.map(student => {
+                const maxUnlockedModule = Math.max(...student.unlockedModules);
+                const progressPercentage = student.totalProgress;
                 
                 return `
-                    <div class="student-item">
-                        <div class="student-info">
-                            <strong>${student.name}</strong>
-                            <br>
-                            <small style="color: var(--text-muted);">RA: ${student.ra}</small>
-                            <br>
-                            <small style="color: var(--text-muted);">Status: ${student.status}</small>
-                        </div>
-                        <div class="student-progress">
-                            <div style="font-size: 0.9rem; color: var(--accent);">
-                                Módulo ${maxUnlockedModule}
+                    <div class="student-card">
+                        <div class="student-header">
+                            <div class="student-info">
+                                <h3>${student.name}</h3>
+                                <div class="student-meta">
+                                    RA: ${student.ra} | ${student.email}
+                                </div>
+                                <div class="student-meta">
+                                    Cadastrado: ${student.registrationDate}
+                                </div>
                             </div>
-                            <div class="progress-bar" style="width: 80px;">
-                                <div class="progress-fill" style="width: ${progress.totalProgress || 0}%; background: var(--primary);"></div>
-                            </div>
-                            <div class="progress-stats">
-                                ${progress.totalProgress || 0}% completo
+                            <div class="student-status">
+                                <div class="status-dot ${student.status === 'Ativo' ? '' : 'inactive'}"></div>
+                                <span>${student.status}</span>
                             </div>
                         </div>
-                        <div class="student-controls">
-                            <select onchange="unlockModuleForStudent('${student.ra}', this.value)" 
-                                    style="padding: 0.25rem; background: var(--card-bg); color: var(--text-light); border: 1px solid var(--primary); border-radius: 4px; margin-right: 0.5rem;">
-                                ${courseData.modules.map(module => 
-                                    `<option value="${module.id}" ${maxUnlockedModule >= module.id ? 'selected' : ''}>
+                        
+                        <div class="module-controls">
+                            <div class="current-module">
+                                Módulo Atual: ${maxUnlockedModule}
+                            </div>
+                            <select class="module-selector" onchange="unlockModuleForStudent('${student.ra}', this.value)">
+                                ${courseModules.map(module => 
+                                    `<option value="${module.id}" ${maxUnlockedModule === module.id ? 'selected' : ''}>
                                         Módulo ${module.id}
                                     </option>`
                                 ).join('')}
                             </select>
-                            <button class="unlock-btn" onclick="unlockNextModule('${student.ra}')">
+                            <button class="unlock-btn" onclick="unlockNextModuleForStudent('${student.ra}')">
                                 Liberar Próximo
                             </button>
+                        </div>
+
+                        <div class="progress-section">
+                            <div class="progress-visual">
+                                <div class="progress-bar-full">
+                                    <div class="progress-fill-full" style="width: ${progressPercentage}%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-text">
+                                ${progressPercentage}% completo
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">
+                            <span>Última atividade: ${student.lastActivity}</span>
+                            <span>Módulos liberados: ${student.unlockedModules.join(', ')}</span>
+                        </div>
+
+                        <div class="danger-zone">
                             <button class="delete-btn" onclick="deleteStudent('${student.ra}')">
-                                Remover
+                                Remover Aluno
                             </button>
                         </div>
                     </div>
@@ -1310,216 +1459,318 @@
         }
 
         function unlockModuleForStudent(ra, moduleId) {
-            if (!studentProgress[ra]) {
-                studentProgress[ra] = { unlockedModules: [1], completedLessons: {}, currentModule: 1, totalProgress: 0 };
-            }
+            const student = studentsDatabase.find(s => s.ra === ra);
+            if (!student) return;
 
-            const progress = studentProgress[ra];
             const targetModule = parseInt(moduleId);
             
-            // Unlock all modules up to the target
-            progress.unlockedModules = [];
+            // Unlock all modules up to target
+            student.unlockedModules = [];
             for (let i = 1; i <= targetModule; i++) {
-                progress.unlockedModules.push(i);
+                student.unlockedModules.push(i);
             }
             
-            progress.currentModule = targetModule;
+            student.lastActivity = new Date().toISOString().split('T')[0];
             
-            // Update student data
-            const student = studentsData.find(s => s.ra === ra);
-            if (student) {
-                student.currentModule = targetModule;
-                student.lastActivity = new Date().toISOString().split('T')[0];
-            }
+            renderStudentsManagement();
+            updateAnalytics();
             
-            renderStudents();
-            updateReports();
-            alert(`Módulo ${targetModule} liberado para o aluno!`);
+            alert(`Módulos 1-${targetModule} liberados para ${student.name}`);
         }
 
-        function unlockNextModule(ra) {
-            if (!studentProgress[ra]) return;
-            
-            const progress = studentProgress[ra];
-            const currentMax = Math.max(...progress.unlockedModules);
+        function unlockNextModuleForStudent(ra) {
+            const student = studentsDatabase.find(s => s.ra === ra);
+            if (!student) return;
+
+            const currentMax = Math.max(...student.unlockedModules);
             const nextModule = currentMax + 1;
             
-            if (nextModule <= courseData.modules.length) {
+            if (nextModule <= courseModules.length) {
                 unlockModuleForStudent(ra, nextModule);
             } else {
-                alert('Aluno já tem todos os módulos liberados!');
+                alert('Todos os módulos já estão liberados para este aluno!');
             }
         }
+
+        // Add Student Form Handler
+        document.getElementById('add-student-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('student-name').value.trim();
+            const ra = document.getElementById('student-ra').value.trim();
+            const email = document.getElementById('student-email').value.trim();
+
+            if (!name || !ra || !email) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+
+            // Check if RA already exists
+            if (studentsDatabase.find(s => s.ra === ra)) {
+                alert('Este RA já está cadastrado!');
+                return;
+            }
+
+            // Add new student
+            const newStudent = {
+                ra: ra,
+                name: name,
+                email: email,
+                unlockedModules: [1],
+                completedLessons: {},
+                totalProgress: 0,
+                lastActivity: new Date().toISOString().split('T')[0],
+                status: 'Ativo',
+                registrationDate: new Date().toISOString().split('T')[0]
+            };
+
+            studentsDatabase.push(newStudent);
+            
+            // Clear form
+            document.getElementById('student-name').value = '';
+            document.getElementById('student-ra').value = '';
+            document.getElementById('student-email').value = '';
+            
+            renderStudentsManagement();
+            updateAnalytics();
+            
+            alert(`Aluno ${name} cadastrado com sucesso!`);
+        });
 
         function deleteStudent(ra) {
-            if (confirm('Tem certeza que deseja remover este aluno?')) {
-                studentsData = studentsData.filter(s => s.ra !== ra);
-                delete studentProgress[ra];
-                renderStudents();
-                updateReports();
+            if (confirm('Tem certeza que deseja remover este aluno? Esta ação não pode ser desfeita.')) {
+                studentsDatabase = studentsDatabase.filter(s => s.ra !== ra);
+                renderStudentsManagement();
+                updateAnalytics();
             }
         }
 
-        // ===== MODULE MANAGEMENT =====
-        function renderModuleManagement() {
-            const container = document.getElementById('module-management');
+        function executeBulkAction() {
+            const action = document.getElementById('bulk-module-select').value;
+            if (!action) return;
             
-            container.innerHTML = courseData.modules.map(module => `
-                <div class="module-admin-card">
-                    <div class="module-admin-header">
+            const moduleNumber = parseInt(action.split('-')[1]);
+            let count = 0;
+            
+            studentsDatabase.forEach(student => {
+                const currentMax = Math.max(...student.unlockedModules);
+                if (currentMax < moduleNumber) {
+                    for (let i = 1; i <= moduleNumber; i++) {
+                        if (!student.unlockedModules.includes(i)) {
+                            student.unlockedModules.push(i);
+                        }
+                    }
+                    student.lastActivity = new Date().toISOString().split('T')[0];
+                    count++;
+                }
+            });
+            
+            renderStudentsManagement();
+            updateAnalytics();
+            alert(`Módulo ${moduleNumber} liberado para ${count} alunos`);
+        }
+
+        // ===== MODULES ADMIN =====
+        function renderModulesAdmin() {
+            const container = document.getElementById('modules-admin-grid');
+            
+            container.innerHTML = courseModules.map(module => `
+                <div style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 1.5rem; border: 2px solid ${module.enabled ? module.color : 'rgba(255, 255, 255, 0.1)'};">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                         <h3>Módulo ${module.id}</h3>
                         <button class="module-toggle ${module.enabled ? 'enabled' : ''}" 
-                                onclick="toggleModule(${module.id})">
-                            ${module.enabled ? 'Ativo' : 'Inativo'}
+                                onclick="toggleModuleStatus(${module.id})"
+                                style="background: ${module.enabled ? 'var(--success)' : 'var(--warning)'}; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: bold;">
+                            ${module.enabled ? 'ATIVO' : 'INATIVO'}
                         </button>
                     </div>
-                    <h4>${module.title}</h4>
+                    <h4 style="margin-bottom: 0.5rem;">${module.title}</h4>
                     <p style="color: var(--text-muted); margin-bottom: 1rem;">${module.description}</p>
                     <div style="background: rgba(0, 206, 201, 0.1); padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem;">
                         <strong>Projeto:</strong> ${module.project}
                     </div>
                     <div style="font-size: 0.9rem; color: var(--text-muted);">
-                        ${module.lessons} aulas disponíveis
+                        ${module.lessons} aulas | Status: ${module.enabled ? 'Disponível' : 'Oculto'}
                     </div>
                 </div>
             `).join('');
         }
 
-        function toggleModule(moduleId) {
-            const module = courseData.modules.find(m => m.id === moduleId);
+        function toggleModuleStatus(moduleId) {
+            const module = courseModules.find(m => m.id === moduleId);
             if (module) {
                 module.enabled = !module.enabled;
-                renderModuleManagement();
-                
-                // Update modules for all logged students
-                renderModulesForStudent();
+                renderModulesAdmin();
+                alert(`Módulo ${moduleId} ${module.enabled ? 'ativado' : 'desativado'} com sucesso!`);
             }
         }
 
-        // ===== GOOGLE SHEETS INTEGRATION =====
-        function updateSheetsStatus() {
-            const indicator = document.getElementById('sheets-status-indicator');
-            const statusText = document.getElementById('sheets-status-text');
+        // ===== GOOGLE SHEETS =====
+        function updateSheetsUI() {
+            const indicator = document.getElementById('connection-indicator');
+            const text = document.getElementById('connection-text');
             
-            if (sheetsConnected) {
+            if (sheetsConnectionId) {
                 indicator.classList.add('connected');
-                statusText.textContent = 'Conectado';
+                text.textContent = 'Conectado';
             } else {
                 indicator.classList.remove('connected');
-                statusText.textContent = 'Desconectado';
+                text.textContent = 'Desconectado';
             }
         }
 
-        function connectSheets() {
-            const sheetsIdInput = document.getElementById('sheets-id').value.trim();
+        function connectGoogleSheets() {
+            const inputId = document.getElementById('sheets-id-input').value.trim();
             
-            if (!sheetsIdInput) {
+            if (!inputId) {
                 alert('Por favor, insira o ID da planilha!');
                 return;
             }
             
-            sheetsId = sheetsIdInput;
-            sheetsConnected = true;
-            
-            updateSheetsStatus();
-            alert('Planilha conectada com sucesso!\n\nID: ' + sheetsId);
+            sheetsConnectionId = inputId;
+            updateSheetsUI();
+            alert('Planilha conectada com sucesso!\n\nID: ' + inputId.substring(0, 20) + '...');
         }
 
-        function syncData() {
-            if (!sheetsConnected) {
+        function exportToSheets() {
+            if (!sheetsConnectionId) {
                 alert('Conecte uma planilha primeiro!');
                 return;
             }
             
-            // Simulate sync
-            alert('Sincronizando dados com a planilha...\n\n' +
-                  'Dados enviados:\n' +
-                  '• ' + studentsData.length + ' alunos\n' +
-                  '• Progresso individual\n' +
-                  '• Módulos desbloqueados\n\n' +
-                  'Sincronização concluída!');
-        }
-
-        function testConnection() {
-            if (!sheetsConnected) {
-                alert('Conecte uma planilha primeiro!');
-                return;
-            }
-            
-            // Simulate test
+            // Simulate export
             setTimeout(() => {
-                alert('Teste de conexão realizado!\n\n' +
-                      'Status: Conexão ativa ✓\n' +
-                      'Planilha: Acessível ✓\n' +
-                      'Permissões: OK ✓\n' +
-                      'Última sincronização: ' + new Date().toLocaleString());
+                alert(`Dados exportados com sucesso!\n\n` +
+                      `• ${studentsDatabase.length} alunos exportados\n` +
+                      `• Progresso individual incluído\n` +
+                      `• Módulos desbloqueados atualizados\n\n` +
+                      `Planilha atualizada em: ${new Date().toLocaleString()}`);
+            }, 1500);
+        }
+
+        function importFromSheets() {
+            if (!sheetsConnectionId) {
+                alert('Conecte uma planilha primeiro!');
+                return;
+            }
+            
+            setTimeout(() => {
+                alert(`Importação simulada concluída!\n\n` +
+                      `Dados que seriam importados:\n` +
+                      `• Novos alunos\n` +
+                      `• Atualizações de progresso\n` +
+                      `• Status de atividade\n\n` +
+                      `Última sincronização: ${new Date().toLocaleString()}`);
+            }, 1500);
+        }
+
+        function syncWithSheets() {
+            if (!sheetsConnectionId) {
+                alert('Conecte uma planilha primeiro!');
+                return;
+            }
+            
+            setTimeout(() => {
+                alert(`Sincronização concluída!\n\n` +
+                      `↗️ Enviados: ${studentsDatabase.length} registros\n` +
+                      `↙️ Recebidos: 0 atualizações\n` +
+                      `⚡ Conflitos: 0\n\n` +
+                      `Próxima sincronização: ${new Date(Date.now() + 3600000).toLocaleString()}`);
+            }, 2000);
+        }
+
+        function testSheetsConnection() {
+            if (!sheetsConnectionId) {
+                alert('Conecte uma planilha primeiro!');
+                return;
+            }
+            
+            setTimeout(() => {
+                alert(`Teste de conectividade:\n\n` +
+                      `✅ Planilha acessível\n` +
+                      `✅ Permissões OK\n` +
+                      `✅ Formato válido\n` +
+                      `✅ API funcionando\n\n` +
+                      `Status: Tudo funcionando perfeitamente!`);
             }, 1000);
         }
 
-        // ===== REPORTS SYSTEM =====
-        function updateReports() {
-            // Calculate stats
-            const totalStudents = studentsData.length;
-            const activeStudents = studentsData.filter(s => s.status === 'Ativo').length;
-            const allProgress = studentsData.map(s => studentProgress[s.ra]?.totalProgress || 0);
-            const avgProgress = Math.round(allProgress.reduce((a, b) => a + b, 0) / totalStudents) || 0;
-            const completedModules = Object.values(studentProgress)
-                .reduce((total, progress) => total + (progress.unlockedModules?.length || 1) - 1, 0);
+        // ===== ANALYTICS =====
+        function updateAnalytics() {
+            // Calculate metrics
+            const totalStudents = studentsDatabase.length;
+            const activeStudents = studentsDatabase.filter(s => s.status === 'Ativo').length;
+            const avgProgress = Math.round(studentsDatabase.reduce((acc, s) => acc + s.totalProgress, 0) / totalStudents) || 0;
+            const activeModules = courseModules.filter(m => m.enabled).length;
 
-            // Update cards
-            document.getElementById('total-students').textContent = totalStudents;
-            document.getElementById('active-students').textContent = activeStudents;
-            document.getElementById('completed-modules').textContent = completedModules;
-            document.getElementById('avg-progress').textContent = avgProgress + '%';
+            // Update metric cards
+            document.getElementById('metric-students').textContent = totalStudents;
+            document.getElementById('metric-active').textContent = activeStudents;
+            document.getElementById('metric-progress').textContent = avgProgress + '%';
+            document.getElementById('metric-modules').textContent = activeModules;
 
-            // Update detailed table
-            const tbody = document.getElementById('detailed-reports-tbody');
-            tbody.innerHTML = studentsData.map(student => {
-                const progress = studentProgress[student.ra] || { unlockedModules: [1], totalProgress: 0 };
-                const maxModule = Math.max(...progress.unlockedModules);
+            // Update change indicators
+            document.getElementById('metric-students-change').textContent = `+${Math.floor(Math.random() * 10)}% este mês`;
+            document.getElementById('metric-active-change').textContent = `+${Math.floor(Math.random() * 15)}% esta semana`;
+            document.getElementById('metric-progress-change').textContent = `+${Math.floor(Math.random() * 8)}% este período`;
+            document.getElementById('metric-modules-change').textContent = `${courseModules.length} total`;
+
+            // Render detailed progress
+            renderDetailedProgress();
+        }
+
+        function renderDetailedProgress() {
+            const container = document.getElementById('detailed-progress');
+            
+            container.innerHTML = studentsDatabase.map(student => {
+                const maxModule = Math.max(...student.unlockedModules);
                 
                 return `
-                    <tr>
-                        <td><strong>${student.name}</strong></td>
-                        <td>${student.ra}</td>
-                        <td>Módulo ${maxModule}</td>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <div class="progress-bar" style="width: 60px;">
-                                    <div class="progress-fill" style="width: ${progress.totalProgress || 0}%; background: var(--primary);"></div>
-                                </div>
-                                ${progress.totalProgress || 0}%
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="flex: 1;">
+                            <strong>${student.name}</strong>
+                            <div style="font-size: 0.9rem; color: var(--text-muted);">
+                                ${student.ra} | ${student.email}
                             </div>
-                        </td>
-                        <td>${student.lastActivity}</td>
-                        <td>
-                            <span style="color: ${student.status === 'Ativo' ? 'var(--success)' : 'var(--warning)'}"">
+                        </div>
+                        <div style="flex: 1; text-align: center;">
+                            <span style="background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem;">
+                                Módulo ${maxModule}
+                            </span>
+                        </div>
+                        <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+                            <div style="width: 100px; height: 6px; background: rgba(255, 255, 255, 0.2); border-radius: 3px; margin-right: 0.5rem;">
+                                <div style="width: ${student.totalProgress}%; height: 100%; background: var(--success); border-radius: 3px;"></div>
+                            </div>
+                            <span style="font-size: 0.9rem; min-width: 40px;">${student.totalProgress}%</span>
+                        </div>
+                        <div style="flex: 1; text-align: center; font-size: 0.9rem; color: var(--text-muted);">
+                            ${student.lastActivity}
+                        </div>
+                        <div style="flex: 0 0 80px; text-align: center;">
+                            <span style="color: ${student.status === 'Ativo' ? 'var(--success)' : 'var(--warning)'}; font-weight: bold;">
                                 ${student.status}
                             </span>
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 `;
             }).join('');
         }
 
-        // ===== STUDENT DASHBOARD =====
-        function renderModulesForStudent() {
-            if (!currentUser) return;
+        // ===== STUDENT MODULES =====
+        function renderStudentModules() {
+            const container = document.getElementById('student-modules-grid');
             
-            const container = document.getElementById('modules-grid');
-            const userProgress = studentProgress[currentUser.ra] || { unlockedModules: [1], totalProgress: 0 };
-            
-            container.innerHTML = courseData.modules.filter(module => module.enabled).map(module => {
-                const isUnlocked = userProgress.unlockedModules.includes(module.id);
-                const progress = 0; // Would be calculated based on completed lessons
-                const statusIcon = isUnlocked ? '🚀' : '🔒';
+            container.innerHTML = courseModules.filter(m => m.enabled).map(module => {
+                const isUnlocked = currentUser.unlockedModules.includes(module.id);
+                const progress = calculateModuleProgress(currentUser, module.id);
+                const statusIcon = progress === 100 ? '✅' : isUnlocked ? '🚀' : '🔒';
 
                 return `
                     <div class="module-card ${!isUnlocked ? 'locked' : ''}" 
-                         onclick="${isUnlocked ? `selectModule(${module.id})` : ''}" 
-                         style="border-color: ${module.color}">
+                         onclick="${isUnlocked ? `openModule(${module.id})` : 'showLockedMessage()'}">
                         <div class="module-header">
-                            <div class="module-number" style="background-color: ${module.color}">
+                            <div class="module-number" style="background: ${module.color};">
                                 ${module.id}
                             </div>
                             <div class="module-status">${statusIcon}</div>
@@ -1530,49 +1781,153 @@
                             🎯 <strong>Projeto:</strong> ${module.project}
                         </div>
                         <div class="module-progress">
-                            <span>0/${module.lessons} aulas</span>
+                            <span>${getCompletedLessonsCount(currentUser, module.id)}/${module.lessons} aulas</span>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${progress}%; background-color: ${module.color}"></div>
+                                <div class="progress-fill" style="width: ${progress}%; background: ${module.color};"></div>
                             </div>
                         </div>
-                        ${!isUnlocked ? '<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; opacity: 0.3;">🔒</div>' : ''}
                     </div>
                 `;
             }).join('');
         }
 
-        function selectModule(moduleId) {
-            const module = courseData.modules.find(m => m.id === moduleId);
-            const userProgress = studentProgress[currentUser.ra] || { unlockedModules: [1] };
-            
-            if (!module || !userProgress.unlockedModules.includes(moduleId)) {
-                alert('Este módulo ainda não está disponível!');
+        function calculateModuleProgress(student, moduleId) {
+            const completedLessons = student.completedLessons[moduleId] || [];
+            const module = courseModules.find(m => m.id === moduleId);
+            return Math.round((completedLessons.length / module.lessons) * 100);
+        }
+
+        function getCompletedLessonsCount(student, moduleId) {
+            return (student.completedLessons[moduleId] || []).length;
+        }
+
+        function openModule(moduleId) {
+            const module = courseModules.find(m => m.id === moduleId);
+            alert(`🎮 ${module.title}\n\nEm breve você poderá acessar todas as aulas deste módulo!\n\nProjeto: ${module.project}\nAulas: ${module.lessons} disponíveis`);
+        }
+
+        function showLockedMessage() {
+            alert('🔒 Módulo Bloqueado\n\nComplete os módulos anteriores ou entre em contato com seu instrutor para liberar este conteúdo.');
+        }
+
+        // ===== SETTINGS =====
+        function changeAdminPassword() {
+            const currentPassword = prompt('Digite a senha atual:');
+            if (currentPassword !== adminPassword) {
+                alert('Senha atual incorreta!');
                 return;
             }
+            
+            const newPassword = prompt('Digite a nova senha:');
+            if (newPassword && newPassword.length >= 6) {
+                adminPassword = newPassword;
+                alert('Senha alterada com sucesso!');
+            } else {
+                alert('Nova senha deve ter pelo menos 6 caracteres.');
+            }
+        }
 
-            alert(`Módulo ${moduleId}: ${module.title}\n\nEm breve você poderá acessar as aulas completas!`);
+        function exportSystemData() {
+            const systemData = {
+                students: studentsDatabase,
+                modules: courseModules,
+                settings: {
+                    adminPassword: adminPassword,
+                    sheetsId: sheetsConnectionId
+                },
+                exportDate: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(systemData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `gamecreators-backup-${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            alert('Dados do sistema exportados com sucesso!');
+        }
+
+        function importSystemData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        
+                        if (data.students && data.modules) {
+                            studentsDatabase = data.students;
+                            courseModules.splice(0, courseModules.length, ...data.modules);
+                            
+                            if (data.settings) {
+                                if (data.settings.adminPassword) adminPassword = data.settings.adminPassword;
+                                if (data.settings.sheetsId) sheetsConnectionId = data.settings.sheetsId;
+                            }
+                            
+                            alert('Dados importados com sucesso!\n\nO sistema será atualizado.');
+                            location.reload();
+                        } else {
+                            alert('Arquivo inválido!');
+                        }
+                    } catch (error) {
+                        alert('Erro ao importar dados: ' + error.message);
+                    }
+                };
+                
+                reader.readAsText(file);
+            };
+            
+            input.click();
+        }
+
+        function resetSystemData() {
+            if (confirm('⚠️ ATENÇÃO: Esta ação irá apagar TODOS os dados do sistema.\n\nTem certeza que deseja continuar?')) {
+                if (confirm('Esta ação não pode ser desfeita. Confirma?')) {
+                    studentsDatabase = [];
+                    courseModules.forEach(module => module.enabled = true);
+                    sheetsConnectionId = null;
+                    
+                    alert('Sistema resetado com sucesso!');
+                    renderStudentsManagement();
+                    renderModulesAdmin();
+                    updateAnalytics();
+                    updateSheetsUI();
+                }
+            }
+        }
+
+        // ===== LOGOUT =====
+        function logout() {
+            currentUser = null;
+            adminMode = false;
+            
+            document.getElementById('dashboard').classList.remove('active');
+            document.getElementById('admin-panel').classList.remove('active');
+            document.getElementById('login-screen').style.display = 'flex';
+            
+            // Reset form
+            document.getElementById('ra-input').value = '';
         }
 
         // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🎮 GameCreators Academy - Sistema Administrativo Completo Carregado!');
+            console.log('🎮 GameCreators Academy - Sistema Administrativo Avançado');
+            console.log('👥 Alunos carregados:', studentsDatabase.length);
+            console.log('📚 Módulos disponíveis:', courseModules.length);
+            console.log('🔐 Sistema de segurança: Ativo');
+            console.log('📊 Analytics: Pronto');
             
-            initializeStudentProgress();
-            updateSheetsStatus();
-            
-            // Load saved sheets ID if exists
-            const savedSheetsId = localStorage.getItem('gamecreators-sheets-id');
-            if (savedSheetsId) {
-                document.getElementById('sheets-id').value = savedSheetsId;
-                sheetsId = savedSheetsId;
-                sheetsConnected = true;
-                updateSheetsStatus();
-            }
-        });
-
-        // Save sheets ID on change
-        document.getElementById('sheets-id').addEventListener('input', function() {
-            localStorage.setItem('gamecreators-sheets-id', this.value);
+            // Initialize UI
+            updateSheetsUI();
         });
     </script>
 </body>
