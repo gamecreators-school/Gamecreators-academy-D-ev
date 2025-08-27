@@ -1307,14 +1307,29 @@
         }
 
         function enterAdminMode() {
+            console.log('Entering admin mode...');
             adminMode = true;
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('dashboard').classList.remove('active');
-            document.getElementById('admin-panel').classList.add('active');
+            currentUser = null;
             
-            renderStudentsManagement();
-            renderModulesAdmin();
-            updateAnalytics();
+            // Force hide all other screens
+            const loginScreen = document.getElementById('login-screen');
+            const dashboard = document.getElementById('dashboard');
+            const adminPanel = document.getElementById('admin-panel');
+            
+            loginScreen.style.display = 'none';
+            dashboard.classList.remove('active');
+            adminPanel.classList.add('active');
+            
+            console.log('Admin panel visibility:', adminPanel.classList.contains('active'));
+            
+            // Initialize admin functions
+            setTimeout(() => {
+                renderStudentsManagement();
+                renderModulesAdmin();
+                updateAnalytics();
+                updateSheetsUI();
+                console.log('Admin functions initialized');
+            }, 100);
         }
 
         // ===== STUDENT LOGIN =====
@@ -1331,15 +1346,8 @@
 
             // Admin access - multiple variations
             if (ra.toLowerCase() === 'admin' || ra === 'ADMIN' || ra === 'administrator') {
-                console.log('Admin access granted');
-                adminMode = true;
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('dashboard').classList.remove('active');
-                document.getElementById('admin-panel').classList.add('active');
-                
-                renderStudentsManagement();
-                renderModulesAdmin();
-                updateAnalytics();
+                console.log('Admin access detected, calling enterAdminMode()');
+                enterAdminMode();
                 return;
             }
 
@@ -1478,23 +1486,37 @@
         }
 
         function unlockModuleForStudent(ra, moduleId) {
+            console.log(`Unlocking module ${moduleId} for student ${ra}`);
+            
             const student = studentsDatabase.find(s => s.ra === ra);
-            if (!student) return;
+            if (!student) {
+                console.error('Student not found:', ra);
+                return;
+            }
 
             const targetModule = parseInt(moduleId);
             
-            // Unlock all modules up to target
-            student.unlockedModules = [];
-            for (let i = 1; i <= targetModule; i++) {
-                student.unlockedModules.push(i);
+            // Initialize unlockedModules if it doesn't exist
+            if (!student.unlockedModules) {
+                student.unlockedModules = [1];
             }
             
+            // Unlock all modules up to target (progressive unlock)
+            const newUnlockedModules = [];
+            for (let i = 1; i <= targetModule; i++) {
+                newUnlockedModules.push(i);
+            }
+            
+            student.unlockedModules = newUnlockedModules;
             student.lastActivity = new Date().toISOString().split('T')[0];
             
+            console.log(`Student ${student.name} now has modules unlocked:`, student.unlockedModules);
+            
+            // Re-render admin interface
             renderStudentsManagement();
             updateAnalytics();
             
-            alert(`Módulos 1-${targetModule} liberados para ${student.name}`);
+            alert(`Módulos 1-${targetModule} liberados para ${student.name}!\n\nMódulos desbloqueados: ${student.unlockedModules.join(', ')}`);
         }
 
         function unlockNextModuleForStudent(ra) {
@@ -1780,10 +1802,25 @@
         function renderStudentModules() {
             const container = document.getElementById('student-modules-grid');
             
+            if (!currentUser) {
+                console.error('No current user found');
+                return;
+            }
+
+            // Find current user in database to get latest data
+            const latestUserData = studentsDatabase.find(s => s.ra === currentUser.ra);
+            if (latestUserData) {
+                currentUser = latestUserData; // Update with latest data
+            }
+
+            console.log('Current user modules:', currentUser.unlockedModules);
+            
             container.innerHTML = courseModules.filter(m => m.enabled).map(module => {
-                const isUnlocked = currentUser.unlockedModules.includes(module.id);
+                const isUnlocked = currentUser.unlockedModules && currentUser.unlockedModules.includes(module.id);
                 const progress = calculateModuleProgress(currentUser, module.id);
                 const statusIcon = progress === 100 ? '✅' : isUnlocked ? '🚀' : '🔒';
+
+                console.log(`Module ${module.id}: unlocked=${isUnlocked}, progress=${progress}%`);
 
                 return `
                     <div class="module-card ${!isUnlocked ? 'locked' : ''}" 
@@ -1805,6 +1842,14 @@
                                 <div class="progress-fill" style="width: ${progress}%; background: ${module.color};"></div>
                             </div>
                         </div>
+                        ${!isUnlocked ? `
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                                        background: rgba(0,0,0,0.8); padding: 1rem; border-radius: 8px; 
+                                        font-size: 0.9rem; text-align: center;">
+                                🔒 Bloqueado<br>
+                                <small style="opacity: 0.8;">Complete módulos anteriores</small>
+                            </div>
+                        ` : ''}
                     </div>
                 `;
             }).join('');
